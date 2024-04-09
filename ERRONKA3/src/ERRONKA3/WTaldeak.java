@@ -18,6 +18,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -33,6 +38,7 @@ public class WTaldeak extends JPanel {
 	DefaultTableModel model;
 	//private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
 	private JTable table;
+	private Connection konexioa;
 
 	/**
 	 * Create the panel.
@@ -128,5 +134,25 @@ public class WTaldeak extends JPanel {
 	}
 	public void refreshTable() {
 		
+	}
+	public Statement konektatu() {
+		try {
+			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/dbikasleak", "root", "");
+			Statement st = konexioa.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			return st;
+		}catch(SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void deskonektatu() {
+		try {
+			konexioa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
