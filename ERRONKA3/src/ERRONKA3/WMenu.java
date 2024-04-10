@@ -67,7 +67,6 @@
 			setTitle("RUGBY Federezio Softwarea");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 650, 450);
-			setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Rugby.png")));
 			
 			JMenuBar menuBar = new JMenuBar();
 			setJMenuBar(menuBar);

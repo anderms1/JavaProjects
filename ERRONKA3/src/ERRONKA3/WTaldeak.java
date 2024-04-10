@@ -21,9 +21,11 @@ import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,10 +37,13 @@ public class WTaldeak extends JPanel {
 	private JTextField textIzena;
 	private JTextField textHerria;
 	private JTextField textZuzendaria;
-	DefaultTableModel model;
+	private DefaultTableModel dtmTaula;
+	private JScrollPane scrollPane;
 	//private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
 	private JTable table;
 	private Connection konexioa;
+	private Vector<String> zutabeak;
+	private Vector<Vector<String>> datuakTaula;
 
 	/**
 	 * Create the panel.
@@ -94,28 +99,48 @@ public class WTaldeak extends JPanel {
 		panel.add(lblNewLabel_2_2);
 		lblNewLabel_2_2.setFont(new Font("Arial", Font.BOLD, 15));
 		
-		table = new JTable();
-		
-		Object[] zutabeIzenak = {"Taldea", "Herria", "Zuzendaria"};
-		
-		model = new DefaultTableModel(null, zutabeIzenak);
-		
-		table.setModel(model);
-		
-		
-		table.setDefaultEditor(Object.class, null);
-		
-		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(26, 153, 572, 219);
 		add(scrollPane);
+		
+		taldeTaulaEguneratu();
 		
 		JButton btnGorde = new JButton("Gorde");
 		btnGorde.setBounds(168, 62, 98, 29);
 		panel.add(btnGorde);
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if (textIzena.getText().isEmpty() || textHerria.getText().isEmpty() || textZuzendaria.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null,"Datu guztiak sartu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
+				}else {
+					String Izena = textIzena.getText().toUpperCase();
+					String Herria = textHerria.getText().toUpperCase();
+					String Zuzendaria = textZuzendaria.getText().toUpperCase();
+					
+					Statement st = konektatu();
+					try {
+						ResultSet row = st.executeQuery("SELECT * FROM taldea WHERE talde_izena ='"+Izena+"'");
+						if(row.next()) {
+							JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							try {
+								st.executeUpdate("INSERT INTO taldea(talde_izena, herria, zuzendaria) VALUES ('"+Izena+"', '"+Herria+"', '"+Zuzendaria+"')");
+								textIzena.setText("");
+								textHerria.setText("");
+								textZuzendaria.setText("");
+							}catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					deskonektatu();
+				}
+				taldeTaulaEguneratu();
 			}
 		});
 		btnGorde.setFont(new Font("Arial", Font.BOLD, 13));
@@ -132,12 +157,14 @@ public class WTaldeak extends JPanel {
 		btnEzabatu.setFont(new Font("Arial", Font.BOLD, 13));
 		
 	}
+	
 	public void refreshTable() {
 		
 	}
+	
 	public Statement konektatu() {
 		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/dbikasleak", "root", "");
+			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
 			Statement st = konexioa.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			return st;
 		}catch(SQLException e1) {
@@ -151,6 +178,37 @@ public class WTaldeak extends JPanel {
 		try {
 			konexioa.close();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void taldeTaulaEguneratu() {
+		Statement st = konektatu();
+		try {
+			ResultSet rows = st.executeQuery("SELECT * FROM taldea");
+			zutabeak = new Vector<String>();
+			ResultSetMetaData metaDatuak = rows.getMetaData();
+			int zutabeKopurua = metaDatuak.getColumnCount();
+			//Zutabeko izenak jartzeko
+			for (int i = 0; i < zutabeKopurua; i++){
+				zutabeak.add(metaDatuak.getColumnLabel(i + 1));
+			}
+			datuakTaula = new Vector<Vector<String>>();
+			while (rows.next()) {
+				Vector<String> row = new Vector<String>();
+				row.add(rows.getString("talde_izena"));
+				row.add(rows.getString("herria"));
+				row.add(rows.getString("zuzendaria"));
+				datuakTaula.add(row);
+			}
+			deskonektatu();
+			dtmTaula = new DefaultTableModel(datuakTaula, zutabeak);
+			table = new JTable(dtmTaula);
+			table.setBounds(23, 10, 677, 286);
+			scrollPane.setViewportView(table);
+			
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
