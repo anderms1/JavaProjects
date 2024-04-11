@@ -117,7 +117,7 @@ public class WTaldeak extends JPanel {
 					String Izena = textIzena.getText().toUpperCase();
 					String Herria = textHerria.getText().toUpperCase();
 					String Zuzendaria = textZuzendaria.getText().toUpperCase();
-					
+					//kjjkkjj
 					Statement st = konektatu();
 					try {
 						ResultSet row = st.executeQuery("SELECT * FROM taldea WHERE talde_izena ='"+Izena+"'");
