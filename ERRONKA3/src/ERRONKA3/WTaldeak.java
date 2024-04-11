@@ -123,6 +123,7 @@ public class WTaldeak extends JPanel {
 						ResultSet row = st.executeQuery("SELECT * FROM taldea WHERE talde_izena ='"+Izena+"'");
 						if(row.next()) {
 							JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+
 						}else {
 							try {
 								st.executeUpdate("INSERT INTO taldea(talde_izena, herria, zuzendaria) VALUES ('"+Izena+"', '"+Herria+"', '"+Zuzendaria+"')");
@@ -183,34 +184,5 @@ public class WTaldeak extends JPanel {
 		}
 	}
 	
-	public void taldeTaulaEguneratu() {
-		Statement st = konektatu();
-		try {
-			ResultSet rows = st.executeQuery("SELECT * FROM taldea");
-			zutabeak = new Vector<String>();
-			ResultSetMetaData metaDatuak = rows.getMetaData();
-			int zutabeKopurua = metaDatuak.getColumnCount();
-			//Zutabeko izenak jartzeko
-			for (int i = 0; i < zutabeKopurua; i++){
-				zutabeak.add(metaDatuak.getColumnLabel(i + 1));
-			}
-			datuakTaula = new Vector<Vector<String>>();
-			while (rows.next()) {
-				Vector<String> row = new Vector<String>();
-				row.add(rows.getString("talde_izena"));
-				row.add(rows.getString("herria"));
-				row.add(rows.getString("zuzendaria"));
-				datuakTaula.add(row);
-			}
-			deskonektatu();
-			dtmTaula = new DefaultTableModel(datuakTaula, zutabeak);
-			table = new JTable(dtmTaula);
-			table.setBounds(23, 10, 677, 286);
-			scrollPane.setViewportView(table);
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 }
