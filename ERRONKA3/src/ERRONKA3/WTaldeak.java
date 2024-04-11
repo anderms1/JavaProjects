@@ -191,7 +191,7 @@ public class WTaldeak extends JPanel {
 			ResultSetMetaData metaDatuak = rows.getMetaData();
 			int zutabeKopurua = metaDatuak.getColumnCount();
 			//Zutabeko izenak jartzeko
-			for (int i = 0; i < zutabeKopurua; i++){
+			for (int i = 1; i < zutabeKopurua; i++){
 				zutabeak.add(metaDatuak.getColumnLabel(i + 1));
 			}
 			datuakTaula = new Vector<Vector<String>>();
