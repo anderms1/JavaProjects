@@ -39,7 +39,7 @@ public class WTaldeak extends JPanel {
 	private JTextField textZuzendaria;
 	private DefaultTableModel dtmTaula;
 	private JScrollPane scrollPane;
-	//private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
+	private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
 	private JTable table;
 	private Connection konexioa;
 	private Vector<String> zutabeak;
@@ -212,5 +212,8 @@ public class WTaldeak extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void taldeakArrayListGorde() {
+		
 	}
 }
