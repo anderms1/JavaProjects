@@ -1,6 +1,8 @@
 package ERRONKA3;
 
-public class Jokalaria {
+public class Jokalaria extends Pertsona{
+	private static final long serialVersionUID = 1L;
+	private int jokalaria_kod;
 	private int dorsala;
 	private String posizioa;
 	private Taldea taldea;
@@ -9,13 +11,22 @@ public class Jokalaria {
 		
 	}
 
-	public Jokalaria(int dorsala, String posizioa, Taldea taldea) {
+	public Jokalaria(int jokalaria_kod, int dorsala, String posizioa, Taldea taldea) {
 		super();
+		this.jokalaria_kod = jokalaria_kod;
 		this.dorsala = dorsala;
 		this.posizioa = posizioa;
 		this.taldea = taldea;
 	}
 
+	public int getJokalaria_kod() {
+		return jokalaria_kod;
+	}
+	
+	public void setJokalaria_kod(int jokalaria_kod) {
+		this.jokalaria_kod = jokalaria_kod;
+	}
+	
 	public int getDorsala() {
 		return dorsala;
 	}
@@ -42,7 +53,7 @@ public class Jokalaria {
 
 	@Override
 	public String toString() {
-		return "Jokalaria [dorsala=" + dorsala + ", posizioa=" + posizioa + ", taldea=" + taldea + "]";
+		return "Jokalaria [jokalaria_kod="+ jokalaria_kod + ", dorsala=" + dorsala + ", posizioa=" + posizioa + ", taldea=" + taldea + "]";
 	}
 	
 	

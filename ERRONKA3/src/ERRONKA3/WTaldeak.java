@@ -115,7 +115,7 @@ public class WTaldeak extends JPanel {
 		table.setModel(dtmTaula);
 		
 		scrollPane = new JScrollPane(table);
-		scrollPane.addMouseListener(new MouseAdapter() {
+		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int[]Indice = table.getSelectedRows();
@@ -197,7 +197,7 @@ public class WTaldeak extends JPanel {
 				                    deskonektatu();
 		
 				                } catch (SQLException ex) {
-				                    JOptionPane.showMessageDialog(null, "Error al eliminar el equipo.", "Error", JOptionPane.ERROR_MESSAGE);
+				                    JOptionPane.showMessageDialog(null, "Errorea Taldea ezabatzean.", "Error", JOptionPane.ERROR_MESSAGE);
 				                    ex.printStackTrace();
 				                }
 				            }
@@ -228,18 +228,21 @@ public class WTaldeak extends JPanel {
 		                    	JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
 		                    }else {
 		                    	st.executeUpdate("UPDATE taldea SET talde_izena = '"+izena+"', zuzendaria = '"+zuzendaria+"', herria = '"+herria+"' WHERE talde_izena = '"+izena+"'");
+		                    	textIzena.setText("");
+								textHerria.setText("");
+								textZuzendaria.setText("");
 		                    }
 		                    deskonektatu();
 	
 		                } catch (SQLException ex) {
-		                    JOptionPane.showMessageDialog(null, "Error al eliminar el equipo.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    JOptionPane.showMessageDialog(null, "Errorea Taldea berriztatzean.", "Error", JOptionPane.ERROR_MESSAGE);
 		                    ex.printStackTrace();
 		                }
 				          
 					}
 					taldeTaulaEguneratu();
 		        } catch (Exception ex) {
-		            JOptionPane.showMessageDialog(null, "Errorea Taldea ezabatzean.","Error",JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Errorea Taldea berriztatzean.","Error",JOptionPane.ERROR_MESSAGE);
 		        }
 			}
 		});
@@ -283,11 +286,13 @@ public class WTaldeak extends JPanel {
 	}
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
+		
 		Statement st = konektatu();
 		try {
 			ResultSet datuak = st.executeQuery("SELECT * FROM taldea");
 			while (datuak.next()) {
 				Taldea talde = new Taldea();
+				talde.setTalde_kod(datuak.getInt("talde_kod"));
 	            talde.setTalde_izena(datuak.getString("talde_izena"));
 	            talde.setHerria(datuak.getString("herria"));
 	            talde.setZuzendaria(datuak.getString("zuzendaria"));
