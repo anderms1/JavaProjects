@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import ERRONKA3.Taldea;
+import ERRONKA3.TaldeaDAO;
 
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
@@ -142,34 +143,29 @@ public class WTaldeak extends JPanel {
 		panel.add(btnGorde);
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TaldeaDAO taldeDao = new TaldeaDAO();
 				if (textIzena.getText().isEmpty() || textHerria.getText().isEmpty() || textZuzendaria.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null,"Datu guztiak sartu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
 				}else {
 					String Izena = textIzena.getText().toUpperCase();
 					String Herria = textHerria.getText().toUpperCase();
 					String Zuzendaria = textZuzendaria.getText().toUpperCase();
-				
-					Statement st = konektatu();
-					try {
-						ResultSet row = st.executeQuery("SELECT * FROM taldea WHERE talde_izena ='"+Izena+"'");
-						if(row.next()) {
-							JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
-						}else {
-							try {
-								st.executeUpdate("INSERT INTO taldea(talde_izena, herria, zuzendaria) VALUES ('"+Izena+"', '"+Herria+"', '"+Zuzendaria+"')");
-								textIzena.setText("");
-								textHerria.setText("");
-								textZuzendaria.setText("");
-							}catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					deskonektatu();
+					
+					boolean DBgaldetu = taldeDao.TaldeDBGaldetu(Izena);
+					
+						
+					if(DBgaldetu == true) {
+						JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						Taldea taldea = new Taldea();
+						taldea.setTalde_izena(Izena);
+						taldea.setHerria(Herria);
+						taldea.setZuzendaria(Zuzendaria);
+						taldeDao.insertTaldea(taldea);
+						textIzena.setText("");
+						textHerria.setText("");
+						textZuzendaria.setText("");
+					}					
 				}
 				taldeTaulaEguneratu();
 			}
@@ -182,24 +178,17 @@ public class WTaldeak extends JPanel {
 		btnEzabatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					TaldeaDAO taldeDao = new TaldeaDAO();
 					int[]Indice = table.getSelectedRows();
 					if (Indice.length == 0) {
 						JOptionPane.showMessageDialog(null, "Talde bat ezabatzeko taulan hautatu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
 						int confirm = JOptionPane.showConfirmDialog(null, "Ziur hautatutako erregistroa(k) ezabatu nahi dituzula?", "Berretsi Ezabaketa", JOptionPane.YES_NO_OPTION);
 						 if (confirm == JOptionPane.YES_OPTION) {
-				                try {
-				                    Statement st = konektatu();
-				                    for (int i = Indice.length - 1; i >= 0; i--) {
-				                        String izena = (String) table.getValueAt(Indice[i], 0);
-				                        st.executeUpdate("DELETE FROM taldea WHERE talde_izena = '" + izena + "'");
-				                    }
-				                    deskonektatu();
-		
-				                } catch (SQLException ex) {
-				                    JOptionPane.showMessageDialog(null, "Errorea Taldea ezabatzean.", "Error", JOptionPane.ERROR_MESSAGE);
-				                    ex.printStackTrace();
-				                }
+			                    for (int i = Indice.length - 1; i >= 0; i--) {
+			                        String izena = (String) table.getValueAt(Indice[i], 0);
+			                        taldeDao.deleteTaldea(izena);
+			                    }
 				            }
 					}
 					taldeTaulaEguneratu();
@@ -252,28 +241,6 @@ public class WTaldeak extends JPanel {
 		
 	}
 	
-
-	public Statement konektatu() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-			Statement st = konexioa.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			return st;
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
-	}
-	
-	public void deskonektatu() {
-		try {
-			konexioa.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public void taldeTaulaEguneratu() {
 		taldeakArrayListGorde();
 		table.setModel(dtmTaula);
@@ -287,22 +254,10 @@ public class WTaldeak extends JPanel {
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
 		
-		Statement st = konektatu();
-		try {
-			ResultSet datuak = st.executeQuery("SELECT * FROM taldea");
-			while (datuak.next()) {
-				Taldea talde = new Taldea();
-				talde.setTalde_kod(datuak.getInt("talde_kod"));
-	            talde.setTalde_izena(datuak.getString("talde_izena"));
-	            talde.setHerria(datuak.getString("herria"));
-	            talde.setZuzendaria(datuak.getString("zuzendaria"));
-	            taldeaList.add(talde);
-		   }
-			deskonektatu();
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		TaldeaDAO taldeDao = new TaldeaDAO();
+		
+		taldeaList = taldeDao.getAllTaldeak();
+		
+		taldeDao.deskonektatu();
 	}
 }

@@ -1,5 +1,7 @@
 package ERRONKA3;
 
+import java.util.Objects;
+
 public class Taldea {
 	private int talde_kod;
 	private String talde_izena;
@@ -93,6 +95,25 @@ public class Taldea {
 	public String toString() {
 		return "Taldea [talde_kod=" + talde_kod + ",talde_izena=" + talde_izena + ", herria=" + herria + ", zuzendaria=" + zuzendaria + ", puntuak="
 				+ puntuak + ", wins=" + wins + ", defeats=" + defeats + ", ties=" + ties + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(defeats, herria, puntuak, talde_izena, talde_kod, ties, wins, zuzendaria);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taldea other = (Taldea) obj;
+		return defeats == other.defeats && Objects.equals(herria, other.herria) && puntuak == other.puntuak
+				&& Objects.equals(talde_izena, other.talde_izena) && talde_kod == other.talde_kod && ties == other.ties
+				&& wins == other.wins && Objects.equals(zuzendaria, other.zuzendaria);
 	}
 	
 	
