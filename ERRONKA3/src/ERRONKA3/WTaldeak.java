@@ -165,7 +165,8 @@ public class WTaldeak extends JPanel {
 						textIzena.setText("");
 						textHerria.setText("");
 						textZuzendaria.setText("");
-					}					
+					}
+					taldeDao.deskonektatu();
 				}
 				taldeTaulaEguneratu();
 			}
@@ -191,6 +192,7 @@ public class WTaldeak extends JPanel {
 			                    }
 				            }
 					}
+					taldeDao.deskonektatu();
 					taldeTaulaEguneratu();
 		        } catch (Exception ex) {
 		            JOptionPane.showMessageDialog(null, "Errorea Taldea ezabatzean.","Error",JOptionPane.ERROR_MESSAGE);
@@ -207,27 +209,25 @@ public class WTaldeak extends JPanel {
 					if (textIzena.getText().isEmpty() || textZuzendaria.getText().isEmpty() || textHerria.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Datu guztiak sartu behar dituzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
-		                try {
-		                	String izena = textIzena.getText().toUpperCase();
-		                	String zuzendaria = textZuzendaria.getText().toUpperCase();
-		                	String herria = textHerria.getText().toUpperCase();
-		                    Statement st = konektatu();
-		                    ResultSet totalRow = st.executeQuery("SELECT COUNT(*) AS total_row FROM taldea WHERE talde_izena = '"+izena+"'");
-		                    if (totalRow.next() && totalRow.getInt("total_row") == 0) {
-		                    	JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
-		                    }else {
-		                    	st.executeUpdate("UPDATE taldea SET talde_izena = '"+izena+"', zuzendaria = '"+zuzendaria+"', herria = '"+herria+"' WHERE talde_izena = '"+izena+"'");
-		                    	textIzena.setText("");
-								textHerria.setText("");
-								textZuzendaria.setText("");
-		                    }
-		                    deskonektatu();
-	
-		                } catch (SQLException ex) {
-		                    JOptionPane.showMessageDialog(null, "Errorea Taldea berriztatzean.", "Error", JOptionPane.ERROR_MESSAGE);
-		                    ex.printStackTrace();
-		                }
-				          
+		                String izena = textIzena.getText().toUpperCase();
+						String zuzendaria = textZuzendaria.getText().toUpperCase();
+						String herria = textHerria.getText().toUpperCase();
+						TaldeaDAO taldeDao = new TaldeaDAO();
+						
+						boolean DBgaldetu = taldeDao.TaldeDBGaldetu(izena);
+						if (DBgaldetu == true) {
+							JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
+						}else {
+							Taldea taldea = new Taldea();
+							taldea.setTalde_izena(izena);
+							taldea.setHerria(herria);
+							taldea.setZuzendaria(zuzendaria);
+							taldeDao.updateTaldea(taldea);
+							textIzena.setText("");
+							textHerria.setText("");
+							textZuzendaria.setText("");
+						}
+				       taldeDao.deskonektatu();   
 					}
 					taldeTaulaEguneratu();
 		        } catch (Exception ex) {

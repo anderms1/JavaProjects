@@ -54,6 +54,20 @@ public class TaldeaDAO {
 		}
     }
 	
+	public void updateTaldea(Taldea taldea) {
+		String sql = "UPDATE taldea SET talde_izena = ?, herria = ?, zuzendaria = ? WHERE talde_izena = ?";
+        try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
+            statement.setString(1, taldea.getTalde_izena());
+            statement.setString(2, taldea.getHerria());
+            statement.setString(3, taldea.getZuzendaria());
+            statement.setString(4, taldea.getTalde_izena());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void deleteTaldea(String izena){
         String sql = "DELETE FROM taldea WHERE talde_izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
