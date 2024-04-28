@@ -173,29 +173,23 @@ public class WJokalariak extends JPanel {
 				}else {
 					String izena = textIzena.getText().toUpperCase();
 					String posizioa = cmboxPosizioa.getSelectedItem().toString().toUpperCase();
-					Taldea hautatutakoTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
-					int talde_kod = hautatutakoTaldea.getTalde_kod();
+					Taldea jokatzenTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
 					
-					Statement st = konektatu();
-					try {
-						ResultSet row = st.executeQuery("SELECT * FROM jokalaria WHERE izena ='"+izena+"'");
-						if(row.next()) {
-							JOptionPane.showMessageDialog(null, "Jokalari hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
-						}else {
-							try {
-								st.executeUpdate("INSERT INTO jokalaria(izena, dorsala, posizioa, talde_kod) VALUES ('"+izena+"', '"+dorsala+"', '"+posizioa+"', '"+talde_kod+"')");
-								textIzena.setText("");
-								spinner.setValue(0);
-							}catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					JokalariaDAO jokalariaDao = new JokalariaDAO();
+					boolean exist = jokalariaDao.JokalariaDBGaldetu(izena);
+					if(exist == true) {
+						JOptionPane.showMessageDialog(null, "Jokalari hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						Jokalaria jokalaria = new Jokalaria();
+						jokalaria.setIzena(izena);
+						jokalaria.setDorsala(dorsala);
+						jokalaria.setPosizioa(posizioa);
+						jokalaria.setTaldea(jokatzenTaldea);
+						jokalariaDao.insertJokalaria(jokalaria);
+						textIzena.setText("");
+						spinner.setValue(0);
 					}
-					deskonektatu();
+					jokalariaDao.deskonektatu();
 				}
 				filtrarTabla();
 			}
@@ -213,20 +207,14 @@ public class WJokalariak extends JPanel {
 						JOptionPane.showMessageDialog(null, "Jokalari bat ezabatzeko taulan hautatu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
 						int confirm = JOptionPane.showConfirmDialog(null, "Ziur hautatutako erregistroa(k) ezabatu nahi dituzula?", "Berretsi Ezabaketa", JOptionPane.YES_NO_OPTION);
-						 if (confirm == JOptionPane.YES_OPTION) {
-				                try {
-				                    Statement st = konektatu();
-				                    for (int i = Indice.length - 1; i >= 0; i--) {
-				                        String izena = (String) table.getValueAt(Indice[i], 0);
-				                        st.executeUpdate("DELETE FROM jokalaria WHERE izena = '" + izena + "'");
-				                    }
-				                    deskonektatu();
-		
-				                } catch (SQLException ex) {
-				                    JOptionPane.showMessageDialog(null, "Errorea Taldea ezabatzean.", "Error", JOptionPane.ERROR_MESSAGE);
-				                    ex.printStackTrace();
-				                }
-				            }
+						 if (confirm == JOptionPane.YES_OPTION) { 
+				            JokalariaDAO jokalariaDao = new JokalariaDAO();  
+		                    for (int i = Indice.length - 1; i >= 0; i--) {
+		                        String izena = (String) table.getValueAt(Indice[i], 0);
+		                        jokalariaDao.deleteJokalaria(izena);
+		                    }
+		                    jokalariaDao.deskonektatu();
+						 }
 					}
 					filtrarTabla();
 		        } catch (Exception ex) {
@@ -240,26 +228,29 @@ public class WJokalariak extends JPanel {
 		btnBerriztatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int dorsala = (int) spinner.getValue();
 					if (textIzena.getText().isEmpty() || dorsala == 0) {
 						JOptionPane.showMessageDialog(null, "Datu guztiak sartu behar dituzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
 		                try {
+		                	int dorsala = (int) spinner.getValue();
 		                	String izena = textIzena.getText().toUpperCase();
 							String posizioa = cmboxPosizioa.getSelectedItem().toString().toUpperCase();
-							Taldea hautatutakoTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
-							int talde_kod = hautatutakoTaldea.getTalde_kod();
-							
-		                    Statement st = konektatu();
-		                    ResultSet totalRow = st.executeQuery("SELECT COUNT(*) AS total_row FROM jokalaria WHERE izena = '"+izena+"'");
-		                    if (totalRow.next() && totalRow.getInt("total_row") == 0) {
+							Taldea jokatzenTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
+			
+		                    JokalariaDAO jokalariaDao = new JokalariaDAO();
+		                    boolean exist = jokalariaDao.JokalariaDBGaldetu(izena);
+		                    if (exist == true) {
 		                    	JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
 		                    }else {
-		                    	st.executeUpdate("UPDATE jokalaria SET izena = '"+izena+"', dorsala = '"+dorsala+"', posizioa = '"+posizioa+"', talde_kod = '"+talde_kod+"' WHERE izena = '"+izena+"'");
+		                    	Jokalaria jokalaria = new Jokalaria();
+		                    	jokalaria.setIzena(izena);
+		                    	jokalaria.setDorsala(dorsala);
+		                    	jokalaria.setPosizioa(posizioa);
+		                    	jokalaria.setTaldea(jokatzenTaldea);
+		                    	jokalariaDao.updateJokalaria(jokalaria);
 		                    	textIzena.setText("");
 								spinner.setValue(0);
 		                    }
-		                    deskonektatu();
 	
 		                } catch (SQLException ex) {
 		                    JOptionPane.showMessageDialog(null, "Errorea Jokalaria berriztatzean.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -313,75 +304,22 @@ public class WJokalariak extends JPanel {
 	
 	public void jokalariakArrayListGorde() {
 		jokalariakList.clear();
-		Statement st = konektatu();
-		try {
-			ResultSet datuak = st.executeQuery("SELECT * FROM jokalaria JOIN taldea ON taldea.talde_kod = jokalaria.talde_kod");
-			while (datuak.next()) {
-				Jokalaria jokalari = new Jokalaria();
-				jokalari.setJokalaria_kod(datuak.getInt("jokalaria_kod"));
-	            jokalari.setIzena(datuak.getString("izena"));
-	            jokalari.setDorsala(datuak.getInt("dorsala"));
-	            jokalari.setPosizioa(datuak.getString("posizioa"));
-	            for(Taldea talde : taldeaList) {
-	            	if(talde.getTalde_izena().equals(datuak.getString("talde_izena"))) {
-	            		jokalari.setTaldea(talde);
-	            	}
-	            }
-	            jokalariakList.add(jokalari);
-			}
-			deskonektatu();
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		JokalariaDAO jokalariaDao = new JokalariaDAO();
+		
+		jokalariakList = jokalariaDao.getAllJokalariak();
+		
+		jokalariaDao.deskonektatu();
 	}
 	
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
-		Statement st = konektatu();
-		try {
-			ResultSet datuak = st.executeQuery("SELECT * FROM taldea");
-			while (datuak.next()) {
-				Taldea talde = new Taldea();
-				talde.setTalde_kod(datuak.getInt("talde_kod"));
-	            talde.setTalde_izena(datuak.getString("talde_izena"));
-	            talde.setHerria(datuak.getString("herria"));
-	            talde.setZuzendaria(datuak.getString("zuzendaria"));
-	            taldeaList.add(talde);
-		   }
-			deskonektatu();
-			
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for(Taldea taldea : taldeaList) {
-			cmboxTaldea.addItem(taldea.getTalde_izena());
-			cmboxFiltrar.addItem(taldea.getTalde_izena());
-		}
-	}
-	
-	
-	public Statement konektatu() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-			Statement st = konexioa.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			return st;
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
-	}
-	
-	public void deskonektatu() {
-		try {
-			konexioa.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		TaldeaDAO taldeaDao = new TaldeaDAO();	
+		
+		taldeaList = taldeaDao.getAllTaldeak();
+		
+		taldeaDao.deskonektatu();
 	}
 	
 	public Taldea IzenarekinTaldeaLortu(String izena) {

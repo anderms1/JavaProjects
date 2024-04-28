@@ -47,7 +47,6 @@ public class WTaldeak extends JPanel {
 	private JScrollPane scrollPane;
 	private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
 	private JTable table;
-	private Connection konexioa;
 
 	/**
 	 * Create the panel.

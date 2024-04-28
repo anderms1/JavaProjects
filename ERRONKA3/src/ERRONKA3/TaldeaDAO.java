@@ -44,9 +44,9 @@ public class TaldeaDAO {
         String sql ="INSERT INTO taldea(talde_izena, herria, zuzendaria) VALUES (?, ?, ?)";
         try {
         	PreparedStatement statement = konexioa.prepareStatement(sql);
-            statement.setString(2, taldea.getTalde_izena());
-            statement.setString(3, taldea.getHerria());
-            statement.setString(4, taldea.getZuzendaria());
+            statement.setString(1, taldea.getTalde_izena());
+            statement.setString(2, taldea.getHerria());
+            statement.setString(3, taldea.getZuzendaria());
             statement.executeUpdate();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
