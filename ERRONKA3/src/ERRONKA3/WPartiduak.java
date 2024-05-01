@@ -8,6 +8,9 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
+
+import ERRONKA3.Jardunaldia;
+
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
@@ -28,8 +31,9 @@ public class WPartiduak extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtP2EtxekoGolak;
 	private JTextField txtP2BisitariGolak;
-	//private ArrayList<Taldea> taldeakList = new ArrayList<Taldea>();
-	//private ArrayList<Denboraldia> denboraldia = new ArrayList<Denboraldia>();
+	private ArrayList<Taldea> taldeakList = new ArrayList<Taldea>();
+	private ArrayList<Denboraldia> denboraldia = new ArrayList<Denboraldia>();
+	private ArrayList<Partidua> partiduak = new ArrayList<Partidua>();
 	private JComboBox cmbJardunaldiak;
 	private JTextField txtP1EtxekoGolak;
 	private JTextField txtP1BisitariGolak;
@@ -97,11 +101,6 @@ public class WPartiduak extends JPanel {
 		panel.add(lblNewLabel_3);
 		
 		cmbJardunaldiak = new JComboBox();
-		cmbJardunaldiak.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		cmbJardunaldiak.setBackground(new Color(255, 255, 255));
 		cmbJardunaldiak.setFont(new Font("Arial", Font.PLAIN, 15));
 		cmbJardunaldiak.setBounds(202, 37, 197, 34);
@@ -200,7 +199,73 @@ public class WPartiduak extends JPanel {
 		lblP3Bisitari.setBounds(388, 212, 182, 34);
 		panel.add(lblP3Bisitari);
 		
+		taldeakArrayListGorde();
+		jokatzenDenboraldiaArrayListGorde();
+		partiduakJardunaldianGorde();
+		updateComboxak();
 		
+		cmbJardunaldiak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				partiduakIrakutsi();
+			}
+		});
 	}
 	
+	public void taldeakArrayListGorde() {
+		taldeakList.clear();
+		
+		TaldeaDAO taldeaDao = new TaldeaDAO();	
+		
+		taldeakList = taldeaDao.getAllTaldeak();
+		
+		taldeaDao.deskonektatu();
+	}
+	
+	public void jokatzenDenboraldiaArrayListGorde() {
+		denboraldia.clear();
+		
+		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
+		JardunaldiaDAO jardunaldiaDao = new JardunaldiaDAO();
+		denboraldia = denboraldiaDao.getJokatzenDenboraldia();
+		denboraldia.get(0).setJardunaldiak(jardunaldiaDao.denboraldiJardunaldiakLortu(denboraldia.get(0)));
+		denboraldiaDao.deskonektatu();
+		jardunaldiaDao.deskonektatu();
+	}
+	
+	public void partiduakJardunaldianGorde(){
+		partiduak.clear();
+		
+		PartiduaDAO partiduaDao = new PartiduaDAO();
+	
+		for(Jardunaldia jardunaldia : denboraldia.get(0).getJardunaldiak()) {
+			partiduak = partiduaDao.jardunaldiPartiduakLortu(jardunaldia);
+			
+		}
+	}
+	
+	public void updateComboxak() {
+		Denboraldia denb =  new Denboraldia();
+		denb.setJardunaldiak(denboraldia.get(0).getJardunaldiak());
+		if(cmbJardunaldiak != null) {
+			cmbJardunaldiak.removeAllItems();
+		}
+		for(Jardunaldia jardunaldia : denb.getJardunaldiak()) {
+			cmbJardunaldiak.addItem(""+jardunaldia.getHasierako_data());	
+		}
+	}
+	
+	public void partiduakIrakutsi() {
+		int i = cmbJardunaldiak.getSelectedIndex();
+		ArrayList<Partidua> partiduak = denboraldia.get(0).getJardunaldiak().get(i).getPartiduak();
+		
+		//Lehengo partidua
+		lblP1Bisitari.setText(partiduak.get(0).getEtxeko_talde().getTalde_izena());
+		lblP1Etxeko.setText(partiduak.get(0).getEtxeko_talde().getTalde_izena());
+		//Bigarren partidua
+		lblP2Bisitari.setText(partiduak.get(1).getEtxeko_talde().getTalde_izena());
+		lblP2Etxeko.setText(partiduak.get(1).getEtxeko_talde().getTalde_izena());
+		//Hirugarren partidua
+		lblP3Bisitari.setText(partiduak.get(2).getEtxeko_talde().getTalde_izena());
+		lblP3Etxeko.setText(partiduak.get(2).getEtxeko_talde().getTalde_izena());
+	}
 }

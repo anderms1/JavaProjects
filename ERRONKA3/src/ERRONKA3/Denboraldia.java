@@ -9,7 +9,7 @@ import ERRONKA3.Jardunaldia;
 public class Denboraldia {
 	private int denboraldia_kod;
 	private Date hasierako_data;
-	private Date amierako_data;
+	private Date amaierako_data;
 	private ArrayList<Jardunaldia> jardunaldiak = new ArrayList<Jardunaldia>();
 	
 	public Denboraldia() {
@@ -21,7 +21,7 @@ public class Denboraldia {
 		super();
 		this.denboraldia_kod = denboraldia_kod;
 		this.hasierako_data = hasierako_data;
-		this.amierako_data = amierako_data;
+		this.amaierako_data = amierako_data;
 		this.jardunaldiak = jardunaldiak;
 	}
 
@@ -41,12 +41,12 @@ public class Denboraldia {
 		this.hasierako_data = hasierako_data;
 	}
 
-	public Date getAmierako_data() {
-		return amierako_data;
+	public Date getAmaierako_data() {
+		return amaierako_data;
 	}
 
-	public void setAmierako_data(Date amierako_data) {
-		this.amierako_data = amierako_data;
+	public void setAmaierako_data(Date amierako_data) {
+		this.amaierako_data = amierako_data;
 	}
 
 	public ArrayList<Jardunaldia> getJardunaldiak() {
@@ -60,12 +60,12 @@ public class Denboraldia {
 	@Override
 	public String toString() {
 		return "Denboraldia [denboraldia_kod=" + denboraldia_kod + ", hasierako_data=" + hasierako_data
-				+ ", amierako_data=" + amierako_data + ", jardunaldiak=" + jardunaldiak + "]";
+				+ ", amierako_data=" + amaierako_data + ", jardunaldiak=" + jardunaldiak + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(amierako_data, denboraldia_kod, hasierako_data, jardunaldiak);
+		return Objects.hash(amaierako_data, denboraldia_kod, hasierako_data, jardunaldiak);
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Denboraldia {
 		if (getClass() != obj.getClass())
 			return false;
 		Denboraldia other = (Denboraldia) obj;
-		return Objects.equals(amierako_data, other.amierako_data) && denboraldia_kod == other.denboraldia_kod
+		return Objects.equals(amaierako_data, other.amaierako_data) && denboraldia_kod == other.denboraldia_kod
 				&& Objects.equals(hasierako_data, other.hasierako_data)
 				&& Objects.equals(jardunaldiak, other.jardunaldiak);
 	}

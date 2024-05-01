@@ -10,11 +10,11 @@ public class Jardunaldia {
 	private int jardunaldia_kod;
 	private Denboraldia denboraldia_kod;
 	private Date hasierako_data;
-	private Date amierako_data;
+	private Date amaierako_data;
 	private ArrayList<Partidua> partiduak;
 	
 	public Jardunaldia() {
-		
+		this.partiduak = new ArrayList<Partidua>();
 	}
 
 	
@@ -25,7 +25,7 @@ public class Jardunaldia {
 		this.jardunaldia_kod = jardunaldia_kod;
 		this.denboraldia_kod = denboraldia_kod;
 		this.hasierako_data = hasierako_data;
-		this.amierako_data = amierako_data;
+		this.amaierako_data = amierako_data;
 		this.partiduak = new ArrayList<>();
 	}
 
@@ -53,12 +53,12 @@ public class Jardunaldia {
 		this.hasierako_data = hasierako_data;
 	}
 
-	public Date getAmierako_data() {
-		return amierako_data;
+	public Date getAmaierako_data() {
+		return amaierako_data;
 	}
 
-	public void setAmierako_data(Date amierako_data) {
-		this.amierako_data = amierako_data;
+	public void setAmaierako_data(Date amierako_data) {
+		this.amaierako_data = amierako_data;
 	}
 
 	public ArrayList<Partidua> getPartiduak() {
@@ -71,13 +71,13 @@ public class Jardunaldia {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(amierako_data, denboraldia_kod, hasierako_data, jardunaldia_kod, partiduak);
+		return Objects.hash(amaierako_data, denboraldia_kod, hasierako_data, jardunaldia_kod, partiduak);
 	}
 	
 	@Override
 	public String toString() {
 		return "Jardunaldia [jardunaldia_kod=" + jardunaldia_kod + ", denboraldia_kod=" + denboraldia_kod
-				+ ", hasierako_data=" + hasierako_data + ", amierako_data=" + amierako_data + ", partiduak=" + partiduak
+				+ ", hasierako_data=" + hasierako_data + ", amierako_data=" + amaierako_data + ", partiduak=" + partiduak
 				+ "]";
 	}
 
@@ -90,7 +90,7 @@ public class Jardunaldia {
 		if (getClass() != obj.getClass())
 			return false;
 		Jardunaldia other = (Jardunaldia) obj;
-		return Objects.equals(amierako_data, other.amierako_data)
+		return Objects.equals(amaierako_data, other.amaierako_data)
 				&& Objects.equals(denboraldia_kod, other.denboraldia_kod)
 				&& Objects.equals(hasierako_data, other.hasierako_data) && jardunaldia_kod == other.jardunaldia_kod
 				&& Objects.equals(partiduak, other.partiduak);

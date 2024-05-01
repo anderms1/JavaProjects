@@ -214,7 +214,7 @@ public class WTaldeak extends JPanel {
 						TaldeaDAO taldeDao = new TaldeaDAO();
 						
 						boolean DBgaldetu = taldeDao.TaldeDBGaldetu(izena);
-						if (DBgaldetu == true) {
+						if (DBgaldetu == false) {
 							JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
 						}else {
 							Taldea taldea = new Taldea();

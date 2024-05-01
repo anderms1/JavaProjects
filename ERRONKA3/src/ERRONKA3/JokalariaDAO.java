@@ -28,7 +28,7 @@ private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
              ResultSet resultSet = statement.executeQuery(sql)) {
         	while (resultSet.next()) {
         		Jokalaria jokalaria = new Jokalaria();
-				jokalaria.setJokalaria_kod(resultSet.getInt("jokolaria_kod"));
+				jokalaria.setJokalaria_kod(resultSet.getInt("jokalaria_kod"));
 				jokalaria.setIzena(resultSet.getString("izena"));
 				jokalaria.setDorsala(resultSet.getInt("dorsala"));
 				jokalaria.setPosizioa(resultSet.getString("posizioa"));

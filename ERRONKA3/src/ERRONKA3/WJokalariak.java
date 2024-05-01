@@ -228,35 +228,29 @@ public class WJokalariak extends JPanel {
 		btnBerriztatu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					int dorsala = (int) spinner.getValue();
 					if (textIzena.getText().isEmpty() || dorsala == 0) {
 						JOptionPane.showMessageDialog(null, "Datu guztiak sartu behar dituzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
-		                try {
-		                	int dorsala = (int) spinner.getValue();
-		                	String izena = textIzena.getText().toUpperCase();
-							String posizioa = cmboxPosizioa.getSelectedItem().toString().toUpperCase();
-							Taldea jokatzenTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
-			
-		                    JokalariaDAO jokalariaDao = new JokalariaDAO();
-		                    boolean exist = jokalariaDao.JokalariaDBGaldetu(izena);
-		                    if (exist == true) {
-		                    	JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
-		                    }else {
-		                    	Jokalaria jokalaria = new Jokalaria();
-		                    	jokalaria.setIzena(izena);
-		                    	jokalaria.setDorsala(dorsala);
-		                    	jokalaria.setPosizioa(posizioa);
-		                    	jokalaria.setTaldea(jokatzenTaldea);
-		                    	jokalariaDao.updateJokalaria(jokalaria);
-		                    	textIzena.setText("");
-								spinner.setValue(0);
+	                	String izena = textIzena.getText().toUpperCase();
+						String posizioa = cmboxPosizioa.getSelectedItem().toString().toUpperCase();
+						Taldea jokatzenTaldea = IzenarekinTaldeaLortu(cmboxTaldea.getSelectedItem().toString());
+		
+	                    JokalariaDAO jokalariaDao = new JokalariaDAO();
+	                    boolean exist = jokalariaDao.JokalariaDBGaldetu(izena);
+	                    if (exist == false) {
+	                    	JOptionPane.showMessageDialog(null, "Ez dago talderik izen honekin.","Error",JOptionPane.ERROR_MESSAGE);
+	                    }else {
+	                    	Jokalaria jokalaria = new Jokalaria();
+	                    	jokalaria.setIzena(izena);
+	                    	jokalaria.setDorsala(dorsala);
+	                    	jokalaria.setPosizioa(posizioa);
+	                    	jokalaria.setTaldea(jokatzenTaldea);
+	                    	jokalariaDao.updateJokalaria(jokalaria);
+	                    	textIzena.setText("");
+							spinner.setValue(0);
 		                    }
-	
-		                } catch (SQLException ex) {
-		                    JOptionPane.showMessageDialog(null, "Errorea Jokalaria berriztatzean.", "Error", JOptionPane.ERROR_MESSAGE);
-		                    ex.printStackTrace();
-		                }
-				          
+	                    jokalariaDao.deskonektatu();
 					}
 					filtrarTabla();
 		        } catch (Exception ex) {
@@ -318,6 +312,10 @@ public class WJokalariak extends JPanel {
 		TaldeaDAO taldeaDao = new TaldeaDAO();	
 		
 		taldeaList = taldeaDao.getAllTaldeak();
+		for(Taldea taldea : taldeaList) {
+			cmboxFiltrar.addItem(taldea.getTalde_izena());
+			cmboxTaldea.addItem(taldea.getTalde_izena());
+		}
 		
 		taldeaDao.deskonektatu();
 	}
@@ -339,7 +337,7 @@ public class WJokalariak extends JPanel {
 				return i;
 			}
 		}
-		return 20;
+		return -1;
 	}
 	public int seleccionarCBTaldea(String taldea) {
 		int total = cmboxTaldea.getItemCount();
@@ -349,7 +347,7 @@ public class WJokalariak extends JPanel {
 				return i;
 			}
 		}
-		return 20;
+		return -1;
 	}
 	
 	public void filtrarTabla() {
