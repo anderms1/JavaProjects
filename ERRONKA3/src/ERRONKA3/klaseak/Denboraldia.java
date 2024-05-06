@@ -1,10 +1,8 @@
-package ERRONKA3;
+package ERRONKA3.klaseak;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import ERRONKA3.Jardunaldia;
 
 public class Denboraldia {
 	private int denboraldia_kod;

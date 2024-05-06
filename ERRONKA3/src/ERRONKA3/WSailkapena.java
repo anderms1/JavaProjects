@@ -17,6 +17,12 @@ import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import ERRONKA3.DAO.DenboraldiaDAO;
+import ERRONKA3.DAO.denb_taldeaDAO;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Taldea;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -27,8 +33,8 @@ public class WSailkapena extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel model;
-	//private ArrayList<Taldea> taldeakList = new ArrayList<Taldea>();
-	//private ArrayList<Denboraldia> denboraldiaList = new ArrayList<Denboraldia>();
+	private ArrayList<Taldea> taldeakList = new ArrayList<Taldea>();
+	private ArrayList<Denboraldia> jokatzenDenb = new ArrayList<Denboraldia>();
 	private JTable table;
 
 	/**
@@ -65,6 +71,73 @@ public class WSailkapena extends JPanel {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 		    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
+		jokatzenDenboraldiaGorde();
+		taulaEguneratu();
 	}
 	
+	public void jokatzenDenboraldiaGorde() {
+		jokatzenDenb.clear();
+		
+		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
+		
+		jokatzenDenb = denboraldiaDao.getJokatzenDenboraldia();
+		
+		denboraldiaDao.deskonektatu();
+	}
+	
+	public void taldeakArrayListGorde() {
+		taldeakList.clear();
+		
+		denb_taldeaDAO denb_taldeaDao = new denb_taldeaDAO();
+		
+		taldeakList = denb_taldeaDao.getJokatzenTaldeakList(jokatzenDenb.get(0));
+		
+		denb_taldeaDao.deskonektatu();
+	}
+	
+	public void taulaEguneratu() {
+		taldeakArrayListGorde();
+		
+		model.setRowCount(0);
+		Taldea swap;
+		boolean aldaketak = false;
+		
+		while(true) {
+			aldaketak = false;
+			for (int i = 1; i < taldeakList.size(); i++){
+				if (taldeakList.get(i).getPuntuak() > taldeakList.get(i-1).getPuntuak())
+				{
+					swap = taldeakList.get(i);
+					taldeakList.set(i,taldeakList.get(i-1));
+					taldeakList.set(i-1,swap);
+					
+					aldaketak = true;
+				}
+			}
+			if(aldaketak == false)
+			{
+				break;
+			}
+		}
+		
+		for(Taldea taldea : taldeakList) {
+			// Verificar si ya existe una fila con el mismo valor en la primera columna
+		    boolean sartuta = false;
+		    for (int i = 0; i < model.getRowCount(); i++) {
+		        if (taldea.getTalde_izena().equals(model.getValueAt(i, 0))) {
+		            sartuta = true;
+		            break;
+		        }
+		    }
+		    
+		 // Si no está añadido, añadir la fila
+		    if (sartuta == false) {
+		        Object[] rowData = {taldea.getTalde_izena(), taldea.getWins(), taldea.getDefeats(), taldea.getTies(), taldea.getPuntuak()};
+		        model.addRow(rowData);
+		    }   
+		}
+		for(int i = 0;i < taldeakList.size();i++) {
+			table.setRowHeight(i, 38);
+		}
+	}
 }

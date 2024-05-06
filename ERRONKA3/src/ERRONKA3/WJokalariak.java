@@ -7,6 +7,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import ERRONKA3.DAO.JokalariaDAO;
+import ERRONKA3.DAO.TaldeaDAO;
+import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.Taldea;
+
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JTextField;

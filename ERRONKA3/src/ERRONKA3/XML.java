@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ERRONKA3.Jokalaria;
+import ERRONKA3.DAO.PartiduaDAO;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.Partidua;
+import ERRONKA3.klaseak.Taldea;
 
 public class XML {
 	public void denboraldiaXMLGeneratu(ArrayList<Denboraldia> denboraldiak, ArrayList<Taldea> taldeak) {

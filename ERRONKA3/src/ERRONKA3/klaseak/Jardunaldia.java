@@ -1,10 +1,10 @@
-package ERRONKA3;
+package ERRONKA3.klaseak;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import ERRONKA3.Partidua;
+import ERRONKA3.klaseak.Partidua;
 
 public class Jardunaldia {
 	private int jardunaldia_kod;

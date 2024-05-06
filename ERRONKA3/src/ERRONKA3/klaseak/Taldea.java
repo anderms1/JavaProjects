@@ -1,4 +1,4 @@
-package ERRONKA3;
+package ERRONKA3.klaseak;
 
 import java.util.ArrayList;
 import java.util.Objects;

@@ -1,4 +1,7 @@
-package ERRONKA3;
+package ERRONKA3.DAO;
+
+import ERRONKA3.DAO.*;
+import ERRONKA3.klaseak.Taldea;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

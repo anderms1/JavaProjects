@@ -1,4 +1,4 @@
-package ERRONKA3;
+package ERRONKA3.klaseak;
 
 public class Jokalaria extends Pertsona{
 	private static final long serialVersionUID = 1L;

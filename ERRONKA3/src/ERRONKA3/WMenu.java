@@ -7,8 +7,7 @@
 	import javax.swing.border.EmptyBorder;
 
 	import ERRONKA3.WTaldeak;
-	import ERRONKA3.WDenboraldiak;
-	import ERRONKA3.WJokalariak;
+import ERRONKA3.WJokalariak;
 
 	import javax.swing.JMenuBar;
 	import javax.swing.JMenu;
@@ -168,6 +167,8 @@
 			 */
 			mntmSailkapena.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					sailkapenLehioa.taulaEguneratu();
+					sailkapenLehioa.jokatzenDenboraldiaGorde();
 					verPanel(sailkapenLehioa);
 				}
 			});

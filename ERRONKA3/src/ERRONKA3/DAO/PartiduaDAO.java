@@ -1,4 +1,10 @@
-package ERRONKA3;
+package ERRONKA3.DAO;
+
+import ERRONKA3.DAO.*;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.Partidua;
+import ERRONKA3.klaseak.Taldea;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

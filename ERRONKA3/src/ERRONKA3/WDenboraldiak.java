@@ -8,10 +8,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import ERRONKA3.Denboraldia;
-import ERRONKA3.Jardunaldia;
-import ERRONKA3.Partidua;
-import ERRONKA3.Taldea;
+import ERRONKA3.DAO.DenboraldiaDAO;
+import ERRONKA3.DAO.TaldeaDAO;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.Partidua;
+import ERRONKA3.klaseak.Taldea;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;

@@ -6,8 +6,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import ERRONKA3.Taldea;
-import ERRONKA3.TaldeaDAO;
+import ERRONKA3.DAO.TaldeaDAO;
+import ERRONKA3.klaseak.Taldea;
 
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;

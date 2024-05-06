@@ -1,12 +1,22 @@
-package ERRONKA3;
+package ERRONKA3.DAO;
 
 import java.sql.Connection;
 import java.util.Date;
+
+import ERRONKA3.DAO.*;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.Partidua;
+import ERRONKA3.klaseak.Taldea;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
 

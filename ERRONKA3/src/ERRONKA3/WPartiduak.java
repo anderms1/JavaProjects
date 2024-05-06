@@ -9,7 +9,14 @@ import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 
-import ERRONKA3.Jardunaldia;
+import ERRONKA3.DAO.DenboraldiaDAO;
+import ERRONKA3.DAO.JardunaldiaDAO;
+import ERRONKA3.DAO.PartiduaDAO;
+import ERRONKA3.DAO.TaldeaDAO;
+import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.Partidua;
+import ERRONKA3.klaseak.Taldea;
 
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -458,8 +465,8 @@ public class WPartiduak extends JPanel {
 					}
 					partiduaDao.updateDenb_taldea(etxekoTaldea, jardunaldia.getDenboraldia_kod());
 					partiduaDao.updateDenb_taldea(kanpokoTaldea, jardunaldia.getDenboraldia_kod());
-					lblP2Bisitari.setForeground(Color.lightGray);
-					lblP2Etxeko.setForeground(Color.lightGray);
+					lblP3Bisitari.setForeground(Color.lightGray);
+					lblP3Etxeko.setForeground(Color.lightGray);
 					txtP3BisitariGolak.setText("");
 					txtP3EtxekoGolak.setText("");
 					gorde = true;
