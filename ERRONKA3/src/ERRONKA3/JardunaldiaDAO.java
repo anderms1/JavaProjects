@@ -33,6 +33,7 @@ private Connection konexioa;
 				jardunaldia.setDenboraldia_kod(denboraldia);
 				jardunaldia.setHasierako_data(resultSet.getDate("hasiera_data"));
 				jardunaldia.setAmaierako_data(resultSet.getDate("amaiera_data"));
+				jardunaldia.setPartiduak(partiduaDao.jardunaldiPartiduakLortu(jardunaldia));
 				jardunaldiak.add(jardunaldia);
             }
         } catch (SQLException e) {
@@ -42,7 +43,6 @@ private Connection konexioa;
         partiduaDao.deskonektatu();
         return jardunaldiak;
 	}
-	
 	
 	public void deskonektatu(){
         try {

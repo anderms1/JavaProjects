@@ -114,6 +114,25 @@ public class TaldeaDAO {
 		return taldea;
 	}
 	
+	public Taldea getTaldeaIzenarekin(String izena) {
+		Taldea taldea = new Taldea();
+		String sql = "SELECT * FROM taldea WHERE talde_izena = ?";
+		try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
+        	statement.setString(1, izena);
+        	ResultSet resultSet = statement.executeQuery();
+        	while (resultSet.next()) {
+				taldea.setTalde_kod(resultSet.getInt("talde_kod"));
+	            taldea.setTalde_izena(resultSet.getString("talde_izena"));
+	            taldea.setHerria(resultSet.getString("herria"));
+	            taldea.setZuzendaria(resultSet.getString("zuzendaria"));
+            }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return taldea;
+	}
+	
 	public void deskonektatu(){
         try {
 			if (konexioa != null && !konexioa.isClosed()) {

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<federazioa>
+	<usuarios>
+	</usuarios>
+	<denboraldiak>
+		<denboraldia>
+			<zenbakia>2024-05-02</zenbakia>
+			<taldeak>
+				<taldea>
+					<izena>GERNIKA R. T.</izena>
+					<escudo>argazkiak/GERNIKA.png</escudo>
+					<jokalariak>
+						<jokalaria>
+							<izena>ENEKO GOROSTIZA</izena>
+							<posizioa>ALA</posizioa>
+							<dorsala>20</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+				<taldea>
+					<izena>DURANGO R. T.</izena>
+					<escudo>argazkiak/DURANGO.png</escudo>
+					<jokalariak>
+						<jokalaria>
+							<izena>JON ANDER SARASOLA</izena>
+							<posizioa>ALA</posizioa>
+							<dorsala>11</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+				<taldea>
+					<izena>ARRATIKO ZEKORRAK</izena>
+					<jokalariak>
+						<jokalaria>
+							<izena>IÑAKI OLANO</izena>
+							<posizioa>PILIER</posizioa>
+							<dorsala>26</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+				<taldea>
+					<izena>GETXO RUGBY TALDEA</izena>
+					<jokalariak>
+						<jokalaria>
+							<izena>ANDER CALVO</izena>
+							<posizioa>APERTURA</posizioa>
+							<dorsala>20</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+				<taldea>
+					<izena>EIBAR R. T.</izena>
+					<escudo>argazkiak/EIBAR.png</escudo>
+					<jokalariak>
+						<jokalaria>
+							<izena>IMANOL IRAZABAL</izena>
+							<posizioa>PILIER</posizioa>
+							<dorsala>32</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+				<taldea>
+					<izena>ARRASATE R. T.</izena>
+					<escudo>argazkiak/ARRASATE.png</escudo>
+					<jokalariak>
+						<jokalaria>
+							<izena>XANTI URBIETA</izena>
+							<posizioa>PILIER</posizioa>
+							<dorsala>33</dorsala>
+						</jokalaria>
+					</jokalariak>
+				</taldea>
+			</taldeak>
+			<jardunaldiak>
+				<jardunaldia>
+					<zenbakia>1</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>ARRATIKO ZEKORRAK</etxekoa>
+							<kanpokoa>GERNIKA R. T.</kanpokoa>
+							<etxeko_golak>2</etxeko_golak>
+							<kanpoko_golak>4</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>GETXO RUGBY TALDEA</etxekoa>
+							<kanpokoa>ARRASATE R. T.</kanpokoa>
+							<etxeko_golak>6</etxeko_golak>
+							<kanpoko_golak>8</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>DURANGO R. T.</etxekoa>
+							<kanpokoa>EIBAR R. T.</kanpokoa>
+							<etxeko_golak>1</etxeko_golak>
+							<kanpoko_golak>1</kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>2</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>ARRASATE R. T.</etxekoa>
+							<kanpokoa>GERNIKA R. T.</kanpokoa>
+							<etxeko_golak>3</etxeko_golak>
+							<kanpoko_golak>6</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRATIKO ZEKORRAK</etxekoa>
+							<kanpokoa>DURANGO R. T.</kanpokoa>
+							<etxeko_golak>12</etxeko_golak>
+							<kanpoko_golak>3</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>EIBAR R. T.</etxekoa>
+							<kanpokoa>GETXO RUGBY TALDEA</kanpokoa>
+							<etxeko_golak>0</etxeko_golak>
+							<kanpoko_golak>0</kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>3</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>DURANGO R. T.</etxekoa>
+							<kanpokoa>GERNIKA R. T.</kanpokoa>
+							<etxeko_golak>23</etxeko_golak>
+							<kanpoko_golak>80</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRASATE R. T.</etxekoa>
+							<kanpokoa>EIBAR R. T.</kanpokoa>
+							<etxeko_golak>89</etxeko_golak>
+							<kanpoko_golak>6</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>GETXO RUGBY TALDEA</etxekoa>
+							<kanpokoa>ARRATIKO ZEKORRAK</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>4</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>EIBAR R. T.</etxekoa>
+							<kanpokoa>GERNIKA R. T.</kanpokoa>
+							<etxeko_golak>3</etxeko_golak>
+							<kanpoko_golak>8</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>DURANGO R. T.</etxekoa>
+							<kanpokoa>GETXO RUGBY TALDEA</kanpokoa>
+							<etxeko_golak>22</etxeko_golak>
+							<kanpoko_golak>23</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRATIKO ZEKORRAK</etxekoa>
+							<kanpokoa>ARRASATE R. T.</kanpokoa>
+							<etxeko_golak>21</etxeko_golak>
+							<kanpoko_golak>23</kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>5</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GETXO RUGBY TALDEA</etxekoa>
+							<kanpokoa>GERNIKA R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>EIBAR R. T.</etxekoa>
+							<kanpokoa>ARRATIKO ZEKORRAK</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRASATE R. T.</etxekoa>
+							<kanpokoa>DURANGO R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>6</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GERNIKA R. T.</etxekoa>
+							<kanpokoa>ARRATIKO ZEKORRAK</kanpokoa>
+							<etxeko_golak>7</etxeko_golak>
+							<kanpoko_golak>87</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRASATE R. T.</etxekoa>
+							<kanpokoa>GETXO RUGBY TALDEA</kanpokoa>
+							<etxeko_golak>8</etxeko_golak>
+							<kanpoko_golak>8</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>EIBAR R. T.</etxekoa>
+							<kanpokoa>DURANGO R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>7</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GERNIKA R. T.</etxekoa>
+							<kanpokoa>ARRASATE R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>DURANGO R. T.</etxekoa>
+							<kanpokoa>ARRATIKO ZEKORRAK</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>GETXO RUGBY TALDEA</etxekoa>
+							<kanpokoa>EIBAR R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>8</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GERNIKA R. T.</etxekoa>
+							<kanpokoa>DURANGO R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>EIBAR R. T.</etxekoa>
+							<kanpokoa>ARRASATE R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRATIKO ZEKORRAK</etxekoa>
+							<kanpokoa>GETXO RUGBY TALDEA</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>9</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GERNIKA R. T.</etxekoa>
+							<kanpokoa>EIBAR R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>GETXO RUGBY TALDEA</etxekoa>
+							<kanpokoa>DURANGO R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRASATE R. T.</etxekoa>
+							<kanpokoa>ARRATIKO ZEKORRAK</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+				<jardunaldia>
+					<zenbakia>10</zenbakia>
+					<partiduak>
+						<partidua>
+							<etxekoa>GERNIKA R. T.</etxekoa>
+							<kanpokoa>GETXO RUGBY TALDEA</kanpokoa>
+							<etxeko_golak>76</etxeko_golak>
+							<kanpoko_golak>76</kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>ARRATIKO ZEKORRAK</etxekoa>
+							<kanpokoa>EIBAR R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+						<partidua>
+							<etxekoa>DURANGO R. T.</etxekoa>
+							<kanpokoa>ARRASATE R. T.</kanpokoa>
+							<etxeko_golak></etxeko_golak>
+							<kanpoko_golak></kanpoko_golak>
+						</partidua>
+					</partiduak>
+				</jardunaldia>
+			</jardunaldiak>
+		</denboraldia>
+	</denboraldiak>
+</federazioa>

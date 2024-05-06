@@ -62,6 +62,19 @@ public class DenboraldiaDAO {
 		}
     }
 	
+	public void insertDenb_Taldea(Denboraldia denboraldia, Taldea taldea) {
+		String sql ="INSERT INTO denb_taldea(denboraldia_kod, talde_kod) VALUES (?, ?)";
+        try {
+        	PreparedStatement statement = konexioa.prepareStatement(sql);
+            statement.setInt(1, denboraldia.getDenboraldia_kod());
+            statement.setInt(2, taldea.getTalde_kod());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public boolean DenboraldiaDBGaldetu(){
         String sql = "SELECT 1 FROM denboraldia WHERE amaierako_data is NULL";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -79,6 +92,7 @@ public class DenboraldiaDAO {
 	
 	public ArrayList<Denboraldia> getHistorialDenboraldia(){
 		ArrayList<Denboraldia> denboraldiHistoriala = new ArrayList<Denboraldia>();
+		JardunaldiaDAO jardunaldiaDao = new JardunaldiaDAO();
         String sql = "SELECT * FROM denboraldia";
         try (Statement statement = konexioa.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
@@ -87,12 +101,14 @@ public class DenboraldiaDAO {
 				denboraldia.setDenboraldia_kod(resultSet.getInt("denboraldia_kod"));
 				denboraldia.setHasierako_data(resultSet.getDate("hasierako_data"));
 				denboraldia.setAmaierako_data(resultSet.getDate("amaierako_data"));
+				denboraldia.setJardunaldiak(jardunaldiaDao.denboraldiJardunaldiakLortu(denboraldia));
 				denboraldiHistoriala.add(denboraldia);
             }
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        jardunaldiaDao.deskonektatu();
         return denboraldiHistoriala;
 	}
 	
@@ -186,6 +202,28 @@ public class DenboraldiaDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public ArrayList<Jokalaria> getAllJokalariak(){
+		ArrayList<Jokalaria> jokalariak = new ArrayList<Jokalaria>();
+		TaldeaDAO taldeaDao = new TaldeaDAO();
+        String sql = "SELECT * FROM jokalaria";
+        try (Statement statement = konexioa.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+        	while (resultSet.next()) {
+        		Jokalaria jokalaria = new Jokalaria();
+        		jokalaria.setIzena(resultSet.getString("izena"));
+        		jokalaria.setDorsala(resultSet.getInt("dorsala"));
+        		jokalaria.setPosizioa(resultSet.getString("posizioa"));
+        		jokalaria.setTaldea(taldeaDao.getTaldeaKodearekin(resultSet.getInt("talde_kod")));
+        		jokalariak.add(jokalaria);
+            }
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        taldeaDao.deskonektatu();
+        return jokalariak;
 	}
 	
 	public void deskonektatu(){

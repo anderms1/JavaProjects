@@ -127,6 +127,7 @@
 			mntmJokalariak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//Funtzioari deitu.
+					jokalariakLehioa.taldeakArrayListGorde();
 					verPanel(jokalariakLehioa);
 				}
 			});
@@ -136,6 +137,9 @@
 			denboraldiakLehioa = new WDenboraldiak();
 			mntmDenboraldiak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					denboraldiakLehioa.jokatzenDenboraldiaArrayListGorde();
+					denboraldiakLehioa.TaulaOsatu();
+					denboraldiakLehioa.comprobarEstadoDenboraldia();
 					verPanel(denboraldiakLehioa);
 				}
 			});
@@ -148,6 +152,7 @@
 			 */
 			mntmPartiduak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					partiduakLehioa.partiduakIrakutsi();
 					verPanel(partiduakLehioa);
 				}
 			});

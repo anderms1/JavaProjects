@@ -1,5 +1,6 @@
 package ERRONKA3;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Taldea {
@@ -11,12 +12,13 @@ public class Taldea {
 	private int wins;
 	private int defeats;
 	private int ties;
+	private ArrayList<Jokalaria> jokalariak = new ArrayList<Jokalaria>();
 	
 	public Taldea() {
 		
 	}
 
-	public Taldea(int talde_kod, String talde_izena, String herria, String zuzendaria, int puntuak, int wins, int defeats, int ties) {
+	public Taldea(int talde_kod, String talde_izena, String herria, String zuzendaria, int puntuak, int wins, int defeats, int ties, ArrayList<Jokalaria> jokalariak) {
 		super();
 		this.talde_kod = talde_kod;
 		this.talde_izena = talde_izena;
@@ -26,7 +28,9 @@ public class Taldea {
 		this.wins = wins;
 		this.defeats = defeats;
 		this.ties = ties;
+		this.jokalariak = jokalariak;
 	}
+	
 	public int getTalde_kod() {
 		return talde_kod;
 	}
@@ -90,7 +94,29 @@ public class Taldea {
 	public void setTies(int ties) {
 		this.ties = ties;
 	}
+	
+	public ArrayList<Jokalaria> getJokalariak(){
+		return jokalariak;
+	}
+	
+	public void setJokalariak(ArrayList<Jokalaria> jokalariak) {
+		this.jokalariak = jokalariak;
+	}
 
+	public void gehituWins(){
+		this.wins += 1;
+		this.puntuak += 4;
+	}
+	
+	public void gehituDefeats() {
+		this.defeats += 1;
+	}
+	
+	public void gehituTies() {
+		this.ties += 1;
+		this.puntuak += 2;
+	}
+	
 	@Override
 	public String toString() {
 		return "Taldea [talde_kod=" + talde_kod + ",talde_izena=" + talde_izena + ", herria=" + herria + ", zuzendaria=" + zuzendaria + ", puntuak="
@@ -116,5 +142,7 @@ public class Taldea {
 				&& wins == other.wins && Objects.equals(zuzendaria, other.zuzendaria);
 	}
 	
-	
+	public void gehituJokalaria(Jokalaria jokalaria) {
+		this.jokalariak.add(jokalaria);
+	}
 }

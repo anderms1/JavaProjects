@@ -87,7 +87,26 @@ public class WPartiduak extends JPanel {
 		JButton btnGorde = new JButton("Gorde");
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					if(txtP1EtxekoGolak.getText().isEmpty() & txtP1BisitariGolak.getText().isEmpty() & txtP2EtxekoGolak.getText().isEmpty() & txtP2BisitariGolak.getText().isEmpty() & txtP3EtxekoGolak.getText().isEmpty() & txtP3BisitariGolak.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Partiduak sartu behar dituzu.","Error",JOptionPane.ERROR_MESSAGE);
+					}else if((txtP1EtxekoGolak.getText().isEmpty() == true & txtP1BisitariGolak.getText().isEmpty() == false) || (txtP1BisitariGolak.getText().isEmpty() == true & txtP1EtxekoGolak.getText().isEmpty() == false)) {
+						JOptionPane.showMessageDialog(null,"Lehenengo partiduen golak sartu behar dira.","Informazioa",JOptionPane.INFORMATION_MESSAGE);
+					}
+					else if((txtP2EtxekoGolak.getText().isEmpty() == true & txtP2BisitariGolak.getText().isEmpty() == false) || (txtP2BisitariGolak.getText().isEmpty() == true & txtP2EtxekoGolak.getText().isEmpty() == false)) {
+						JOptionPane.showMessageDialog(null,"Bigarren partiduen golak sartu behar dira.","Informazioa",JOptionPane.INFORMATION_MESSAGE);
+					}
+					else if((txtP3EtxekoGolak.getText().isEmpty() == true & txtP3BisitariGolak.getText().isEmpty() == false) || (txtP3BisitariGolak.getText().isEmpty() == true & txtP3EtxekoGolak.getText().isEmpty() == false)) {
+						JOptionPane.showMessageDialog(null,"Hirugarren partiduen golak sartu behar dira.","Informazioa",JOptionPane.INFORMATION_MESSAGE);
+					}else {	
+						int posizioa = cmbJardunaldiak.getSelectedIndex();
+						Jardunaldia jardunaldia = denboraldia.get(0).getJardunaldiak().get(posizioa);
+						puntuakEman(jardunaldia);
+					}
+				} catch (Exception ex) {
+		            JOptionPane.showMessageDialog(null, "Errorea Partidua sartzean.","Error",JOptionPane.ERROR_MESSAGE);
+		            ex.printStackTrace();
+		        }
 			}
 		});
 		btnGorde.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -226,8 +245,10 @@ public class WPartiduak extends JPanel {
 		
 		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
 		JardunaldiaDAO jardunaldiaDao = new JardunaldiaDAO();
-		denboraldia = denboraldiaDao.getJokatzenDenboraldia();
-		denboraldia.get(0).setJardunaldiak(jardunaldiaDao.denboraldiJardunaldiakLortu(denboraldia.get(0)));
+		if(denboraldia.size() >= 0) {
+			denboraldia = denboraldiaDao.getJokatzenDenboraldia();
+			denboraldia.get(0).setJardunaldiak(jardunaldiaDao.denboraldiJardunaldiakLortu(denboraldia.get(0)));
+		}
 		denboraldiaDao.deskonektatu();
 		jardunaldiaDao.deskonektatu();
 	}
@@ -236,36 +257,220 @@ public class WPartiduak extends JPanel {
 		partiduak.clear();
 		
 		PartiduaDAO partiduaDao = new PartiduaDAO();
-	
-		for(Jardunaldia jardunaldia : denboraldia.get(0).getJardunaldiak()) {
-			partiduak = partiduaDao.jardunaldiPartiduakLortu(jardunaldia);
-			
+		int i = 0;
+		if(partiduak.size() >= 0) {
+			for(Jardunaldia jardunaldia : denboraldia.get(0).getJardunaldiak()) {
+				partiduak = partiduaDao.jardunaldiPartiduakLortu(jardunaldia);
+				denboraldia.get(0).getJardunaldiak().get(i).setPartiduak(partiduak);
+				i++;
+			}
 		}
+		partiduaDao.deskonektatu();
 	}
 	
 	public void updateComboxak() {
 		Denboraldia denb =  new Denboraldia();
-		denb.setJardunaldiak(denboraldia.get(0).getJardunaldiak());
+		if (denboraldia.size() > 0) {
+			denb.setJardunaldiak(denboraldia.get(0).getJardunaldiak());
+		}
 		if(cmbJardunaldiak != null) {
 			cmbJardunaldiak.removeAllItems();
 		}
 		for(Jardunaldia jardunaldia : denb.getJardunaldiak()) {
-			cmbJardunaldiak.addItem(""+jardunaldia.getHasierako_data());	
+			cmbJardunaldiak.addItem("Jardunaldia: "+jardunaldia.getHasierako_data());	
 		}
 	}
 	
 	public void partiduakIrakutsi() {
 		int i = cmbJardunaldiak.getSelectedIndex();
+		PartiduaDAO partiduaDao = new PartiduaDAO();
 		ArrayList<Partidua> partiduak = denboraldia.get(0).getJardunaldiak().get(i).getPartiduak();
 		
 		//Lehengo partidua
-		lblP1Bisitari.setText(partiduak.get(0).getEtxeko_talde().getTalde_izena());
+		lblP1Bisitari.setText(partiduak.get(0).getKanpoko_talde().getTalde_izena());
 		lblP1Etxeko.setText(partiduak.get(0).getEtxeko_talde().getTalde_izena());
+		partiduak.get(0).setDenboraldia(denboraldia.get(0));
+		partiduak.get(0).setJardunaldia(denboraldia.get(0).getJardunaldiak().get(i));
+		boolean jolastuta1 = partiduaDao.partiduaAmaitutaGaldetu(partiduak.get(0));
+		if(jolastuta1 == true) {
+			lblP1Bisitari.setForeground(Color.lightGray);
+			lblP1Etxeko.setForeground(Color.lightGray);
+			txtP1BisitariGolak.setEditable(false);
+			txtP1EtxekoGolak.setEditable(false);
+		}else {
+			lblP1Bisitari.setForeground(Color.black);
+			lblP1Etxeko.setForeground(Color.black);
+			txtP1BisitariGolak.setEditable(true);
+			txtP1EtxekoGolak.setEditable(true);
+		}
+		
 		//Bigarren partidua
-		lblP2Bisitari.setText(partiduak.get(1).getEtxeko_talde().getTalde_izena());
+		lblP2Bisitari.setText(partiduak.get(1).getKanpoko_talde().getTalde_izena());
 		lblP2Etxeko.setText(partiduak.get(1).getEtxeko_talde().getTalde_izena());
+		partiduak.get(1).setDenboraldia(denboraldia.get(0));
+		partiduak.get(1).setJardunaldia(denboraldia.get(0).getJardunaldiak().get(i));
+		boolean jolastuta2 = partiduaDao.partiduaAmaitutaGaldetu(partiduak.get(1));
+		if(jolastuta2 == true) {
+			lblP2Bisitari.setForeground(Color.lightGray);
+			lblP2Etxeko.setForeground(Color.lightGray);
+			txtP2BisitariGolak.setEditable(false);
+			txtP2EtxekoGolak.setEditable(false);
+		}else {
+			lblP2Bisitari.setForeground(Color.black);
+			lblP2Etxeko.setForeground(Color.black);
+			txtP2BisitariGolak.setEditable(true);
+			txtP2EtxekoGolak.setEditable(true);
+		}
+		
 		//Hirugarren partidua
-		lblP3Bisitari.setText(partiduak.get(2).getEtxeko_talde().getTalde_izena());
+		lblP3Bisitari.setText(partiduak.get(2).getKanpoko_talde().getTalde_izena());
 		lblP3Etxeko.setText(partiduak.get(2).getEtxeko_talde().getTalde_izena());
+		partiduak.get(2).setDenboraldia(denboraldia.get(0));
+		partiduak.get(2).setJardunaldia(denboraldia.get(0).getJardunaldiak().get(i));
+		boolean jolastuta3 = partiduaDao.partiduaAmaitutaGaldetu(partiduak.get(2));
+		if(jolastuta3 == true) {
+			lblP3Bisitari.setForeground(Color.lightGray);
+			lblP3Etxeko.setForeground(Color.lightGray);
+			txtP3BisitariGolak.setEditable(false);
+			txtP3EtxekoGolak.setEditable(false);
+		}else {
+			lblP3Bisitari.setForeground(Color.black);
+			lblP3Etxeko.setForeground(Color.black);
+			txtP3BisitariGolak.setEditable(true);
+			txtP3EtxekoGolak.setEditable(true);
+		}
+		partiduaDao.deskonektatu();
+	}
+	
+	public void puntuakEman(Jardunaldia jardunaldia) {
+		TaldeaDAO taldeaDao = new TaldeaDAO();
+		PartiduaDAO partiduaDao = new PartiduaDAO();
+		boolean gorde = false;
+		
+		int confirm = JOptionPane.showConfirmDialog(null, "Ziur zaude emaitza hau dela?", "Berretsi emaitza", JOptionPane.YES_NO_OPTION);
+		if (confirm == JOptionPane.YES_OPTION) {
+			//Lehengo partidua
+			if(!txtP1EtxekoGolak.getText().isEmpty() && !txtP1BisitariGolak.getText().isEmpty()) {
+				Partidua partidua1 = jardunaldia.getPartiduak().get(0);
+				boolean amaituta1 = partiduaDao.partiduaAmaitutaGaldetu(partidua1);
+				if(amaituta1 == true) {
+					JOptionPane.showMessageDialog(null, "Lehen partiduen emaitza sartuta dago","Error",JOptionPane.ERROR_MESSAGE);
+				}else {
+					//Taldeak lortu egiten ditugu
+					Taldea etxekoTaldea = taldeaDao.getTaldeaIzenarekin(lblP1Etxeko.getText());
+					Taldea kanpokoTaldea = taldeaDao.getTaldeaIzenarekin(lblP1Bisitari.getText());
+					
+					//Partiduen emaitza sartzen dugu
+					int etxekoGolak = Integer.parseInt(txtP1EtxekoGolak.getText());
+					int kanpokoGolak = Integer.parseInt(txtP1BisitariGolak.getText());
+					partidua1.setEtxekoGolak(etxekoGolak);
+					partidua1.setKanpokoGolak(kanpokoGolak);
+					partiduaDao.updatePartidua(partidua1);
+					
+					//Puntuak eman
+					if(etxekoGolak > kanpokoGolak) {
+						etxekoTaldea.gehituWins();
+						kanpokoTaldea.gehituDefeats();
+					}else if(etxekoGolak < kanpokoGolak) {
+						etxekoTaldea.gehituDefeats();
+						kanpokoTaldea.gehituWins();
+					}else {
+						etxekoTaldea.gehituTies();
+						kanpokoTaldea.gehituTies();
+					}
+					partiduaDao.updateDenb_taldea(etxekoTaldea, jardunaldia.getDenboraldia_kod());
+					partiduaDao.updateDenb_taldea(kanpokoTaldea, jardunaldia.getDenboraldia_kod());
+					lblP1Bisitari.setForeground(Color.lightGray);
+					lblP1Etxeko.setForeground(Color.lightGray);
+					txtP1BisitariGolak.setText("");
+					txtP1EtxekoGolak.setText("");
+					gorde = true;
+				}
+			}
+			
+			
+			//Bigarren partidua
+			if(!txtP2EtxekoGolak.getText().isEmpty() && !txtP2BisitariGolak.getText().isEmpty()) {
+				Partidua partidua2 = jardunaldia.getPartiduak().get(1);
+				boolean amaituta2 = partiduaDao.partiduaAmaitutaGaldetu(partidua2);
+				if(amaituta2 == true) {
+					JOptionPane.showMessageDialog(null, "Bigarren partiduen emaitza sartuta dago","Error",JOptionPane.ERROR_MESSAGE);
+				}else{
+					Taldea etxekoTaldea = taldeaDao.getTaldeaIzenarekin(lblP2Etxeko.getText());
+					Taldea kanpokoTaldea = taldeaDao.getTaldeaIzenarekin(lblP2Bisitari.getText());
+					
+					//Partiduen emaitza sartzen dugu
+					int etxekoGolak = Integer.parseInt(txtP2EtxekoGolak.getText());
+					int kanpokoGolak = Integer.parseInt(txtP2BisitariGolak.getText());
+					partidua2.setEtxekoGolak(etxekoGolak);
+					partidua2.setKanpokoGolak(kanpokoGolak);
+					partiduaDao.updatePartidua(partidua2);
+					
+					//Puntuak eman
+					if(etxekoGolak > kanpokoGolak) {
+						etxekoTaldea.gehituWins();
+						kanpokoTaldea.gehituDefeats();
+					}else if(etxekoGolak < kanpokoGolak) {
+						etxekoTaldea.gehituDefeats();
+						kanpokoTaldea.gehituWins();
+					}else {
+						etxekoTaldea.gehituTies();
+						kanpokoTaldea.gehituTies();
+					}
+					partiduaDao.updateDenb_taldea(etxekoTaldea, jardunaldia.getDenboraldia_kod());
+					partiduaDao.updateDenb_taldea(kanpokoTaldea, jardunaldia.getDenboraldia_kod());
+					lblP2Bisitari.setForeground(Color.lightGray);
+					lblP2Etxeko.setForeground(Color.lightGray);
+					txtP2BisitariGolak.setText("");
+					txtP2EtxekoGolak.setText("");
+					gorde = true;
+				}
+			}
+			
+			
+			//Hirugarren partidua
+			if(!txtP3EtxekoGolak.getText().isEmpty() && !txtP3BisitariGolak.getText().isEmpty()) {
+				Partidua partidua3 = jardunaldia.getPartiduak().get(2);
+				boolean amaituta3 = partiduaDao.partiduaAmaitutaGaldetu(partidua3);
+				if(amaituta3 == true) {
+					JOptionPane.showMessageDialog(null, "Hirugarren partiduen emaitza sartuta dago","Error",JOptionPane.ERROR_MESSAGE);
+				}else {
+					Taldea etxekoTaldea = taldeaDao.getTaldeaIzenarekin(lblP3Etxeko.getText());
+					Taldea kanpokoTaldea = taldeaDao.getTaldeaIzenarekin(lblP3Bisitari.getText());
+					
+					//Partiduen emaitza sartzen dugu
+					int etxekoGolak = Integer.parseInt(txtP3EtxekoGolak.getText());
+					int kanpokoGolak = Integer.parseInt(txtP3BisitariGolak.getText());
+					partidua3.setEtxekoGolak(etxekoGolak);
+					partidua3.setKanpokoGolak(kanpokoGolak);
+					partiduaDao.updatePartidua(partidua3);
+					
+					//Puntuak eman
+					if(etxekoGolak > kanpokoGolak) {
+						etxekoTaldea.gehituWins();
+						kanpokoTaldea.gehituDefeats();
+					}else if(etxekoGolak < kanpokoGolak) {
+						etxekoTaldea.gehituDefeats();
+						kanpokoTaldea.gehituWins();
+					}else {
+						etxekoTaldea.gehituTies();
+						kanpokoTaldea.gehituTies();
+					}
+					partiduaDao.updateDenb_taldea(etxekoTaldea, jardunaldia.getDenboraldia_kod());
+					partiduaDao.updateDenb_taldea(kanpokoTaldea, jardunaldia.getDenboraldia_kod());
+					lblP2Bisitari.setForeground(Color.lightGray);
+					lblP2Etxeko.setForeground(Color.lightGray);
+					txtP3BisitariGolak.setText("");
+					txtP3EtxekoGolak.setText("");
+					gorde = true;
+				}
+			}
+			taldeaDao.deskonektatu();
+			partiduaDao.deskonektatu();
+			
+			if(gorde == true) {
+				JOptionPane.showMessageDialog(null, "Partidua(k) gorde egin dira.","Informazioa",JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 }

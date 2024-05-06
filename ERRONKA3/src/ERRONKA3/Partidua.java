@@ -93,6 +93,7 @@ public class Partidua {
 	public void setKanpokoGolak(int kanpokoGolak) {
 		this.kanpokoGolak = kanpokoGolak;
 	}
+	
 
 	@Override
 	public String toString() {

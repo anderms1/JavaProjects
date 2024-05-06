@@ -101,7 +101,7 @@ public class WDenboraldiak extends JPanel {
 							denboraldiaDao.insertDenboraldia(denboraldia);
 							denboraldiaDao.deskonektatu();
 							jokatzenDenboraldiaArrayListGorde();
-							
+							denb_taldeGeneratu(jokatzendenboraldi.get(0));
 							JardunaldiakGeneratu(jokatzendenboraldi.get(0));
 							
 							lblSortuta.setVisible(true);
@@ -180,7 +180,7 @@ public class WDenboraldiak extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setEnabled(false);
-		scrollPane.setBounds(92, 175, 418, 200);
+		scrollPane.setBounds(92, 175, 418, 179);
 		add(scrollPane);
 		
 		JLabel lblNewLabel_1 = new JLabel("Denboraldi Historiala");
@@ -189,12 +189,53 @@ public class WDenboraldiak extends JPanel {
 		lblNewLabel_1.setBounds(92, 146, 418, 27);
 		add(lblNewLabel_1);
 		
+		JButton btnXMLGeneratu = new JButton("XML Sortu");
+		btnXMLGeneratu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					DenboraldiHistorialaArrayListGorde();
+					DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
+					ArrayList<Jokalaria> jokalariak = new ArrayList<Jokalaria>();
+					jokalariak = denboraldiaDao.getAllJokalariak();
+					for(Taldea taldea : taldeakList) {
+						for(Jokalaria jokalaria : jokalariak) {
+							if(jokalaria.getTaldea().getTalde_izena().equals(taldea.getTalde_izena())) {
+								taldea.gehituJokalaria(jokalaria);
+							}
+						}
+					}	
+					denboraldiaDao.deskonektatu();
+					
+					XML xml = new XML();
+					
+					xml.denboraldiaXMLGeneratu(denboraldiHistoriala,taldeakList);
+					JOptionPane.showMessageDialog(null, "XML-a ongi sortuta.","Information",JOptionPane.INFORMATION_MESSAGE);
+					
+				}catch (Exception ex) {
+		            JOptionPane.showMessageDialog(null, "Errorea xml sortzen.","Error",JOptionPane.ERROR_MESSAGE);
+		            ex.printStackTrace();
+		        }
+			}
+		});
+		btnXMLGeneratu.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnXMLGeneratu.setBounds(254, 356, 95, 21);
+		add(btnXMLGeneratu);
+		
 		TaulaOsatu();
 		comprobarEstadoDenboraldia();
 		taldeakArrayListGorde();
 	}
 	
-public void JardunaldiakGeneratu(Denboraldia denboraldia) {
+	public void denb_taldeGeneratu(Denboraldia denboraldia) {
+		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
+		
+		for(Taldea taldea : taldeakList) {
+			denboraldiaDao.insertDenb_Taldea(denboraldia, taldea);
+		}
+		denboraldiaDao.deskonektatu();
+	}
+	
+	public void JardunaldiakGeneratu(Denboraldia denboraldia) {
 		
 		int numEquipos = taldeakList.size();
         int mitadEquipos = numEquipos / 2;
@@ -315,6 +356,7 @@ public void JardunaldiakGeneratu(Denboraldia denboraldia) {
 		boolean estado = denboraldiaDao.DenboraldiaDBGaldetu();
 		if (estado == true) {
         	lblJokatzen.setVisible(true);
+        	lblSortuta.setVisible(false);
         }else {
         	lblJokatzen.setVisible(false);
         }
