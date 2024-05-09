@@ -265,7 +265,7 @@ public class WPartiduak extends JPanel {
 		
 		PartiduaDAO partiduaDao = new PartiduaDAO();
 		int i = 0;
-		if(partiduak.size() >= 0) {
+		if(!partiduak.isEmpty()) {
 			for(Jardunaldia jardunaldia : denboraldia.get(0).getJardunaldiak()) {
 				partiduak = partiduaDao.jardunaldiPartiduakLortu(jardunaldia);
 				denboraldia.get(0).getJardunaldiak().get(i).setPartiduak(partiduak);
@@ -391,6 +391,7 @@ public class WPartiduak extends JPanel {
 					lblP1Etxeko.setForeground(Color.lightGray);
 					txtP1BisitariGolak.setText("");
 					txtP1EtxekoGolak.setText("");
+					
 					gorde = true;
 				}
 			}
@@ -430,6 +431,7 @@ public class WPartiduak extends JPanel {
 					lblP2Etxeko.setForeground(Color.lightGray);
 					txtP2BisitariGolak.setText("");
 					txtP2EtxekoGolak.setText("");
+					
 					gorde = true;
 				}
 			}
@@ -469,6 +471,7 @@ public class WPartiduak extends JPanel {
 					lblP3Etxeko.setForeground(Color.lightGray);
 					txtP3BisitariGolak.setText("");
 					txtP3EtxekoGolak.setText("");
+					
 					gorde = true;
 				}
 			}

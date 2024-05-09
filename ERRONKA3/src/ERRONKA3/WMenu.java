@@ -44,20 +44,7 @@ import ERRONKA3.WJokalariak;
 		WPartiduak partiduakLehioa;
 		WSailkapena sailkapenLehioa;
 		WSailkapenHistoriala sailkapenHistorialaLehioa;
-		public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						WMenu frame = new WMenu();
-						frame.setLocationRelativeTo(null);
-						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
+		
 	
 		/**
 		 * Create the frame.
@@ -112,7 +99,7 @@ import ERRONKA3.WJokalariak;
 			 */
 			mntmTaldeak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//Funtzioari deitu.
+					//Funtzioari  deitu.
 					verPanel(taldeakLehioa);
 				}
 			});
@@ -152,9 +139,12 @@ import ERRONKA3.WJokalariak;
 			mntmPartiduak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					partiduakLehioa.partiduakIrakutsi();
+					partiduakLehioa.jokatzenDenboraldiaArrayListGorde();
+					partiduakLehioa.partiduakJardunaldianGorde();
+					
 					verPanel(partiduakLehioa);
 				}
-			});
+			});  
 			mnKudeatu.add(mntmPartiduak);
 			
 			JMenu mnIkusi = new JMenu("Ikusi");
@@ -184,7 +174,7 @@ import ERRONKA3.WJokalariak;
 				        //Erabiltzailearen direktorioa bilatu
 				        String userDirectory = System.getProperty("user.dir");
 				        //Erronka2 karpeta joango da eta file.separator batekin src eta fitxategiak
-				        String url = userDirectory + File.separator + "src" + File.separator + "Fitxategiak";
+				        String url = userDirectory;
 				        File carpeta = new File(url);
 				        Desktop.getDesktop().open(carpeta);
 				    } catch (IOException ex) {
@@ -200,6 +190,8 @@ import ERRONKA3.WJokalariak;
 			 */
 			mntmSailkapen_Historiala.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					sailkapenHistorialaLehioa.taulaEguneratu();
+					sailkapenHistorialaLehioa.denboraldiaHistorialaGorde();
 					verPanel(sailkapenHistorialaLehioa);
 				}
 			});

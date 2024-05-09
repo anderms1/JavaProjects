@@ -71,29 +71,32 @@ public class WSailkapenHistoriala extends JPanel {
 		});
 		comboBox.setBounds(26, 74, 129, 21);
 		add(comboBox);
-		
+		denboraldiaHistorialaGorde();
 		taulaEguneratu();
 	}
 	
 	public void denboraldiaHistorialaGorde() {
 		denboraldiHistoriala.clear();
+		comboBox.removeAllItems();
 		
 		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
 		
 		denboraldiHistoriala = denboraldiaDao.getHistorialDenboraldia();
 		
-		denboraldiaDao.deskonektatu();
-		
 		for(Denboraldia denboraldia : denboraldiHistoriala){
 			String data = denboraldia.getHasierako_data().toString();
 			comboBox.addItem(data);
 		}
+		
+		denboraldiaDao.deskonektatu();
+		
 	}
 	
 	public void taulaEguneratu() {
-		denboraldiaHistorialaGorde();
-		
-		String data = comboBox.getSelectedItem().toString();
+		String data = null;
+		if(comboBox.getSelectedItem() != null) {
+			data = comboBox.getSelectedItem().toString();
+		}
 		
 		for(Denboraldia denboraldia : denboraldiHistoriala) {
 			if(denboraldia.getHasierako_data().toString().equals(data)) {

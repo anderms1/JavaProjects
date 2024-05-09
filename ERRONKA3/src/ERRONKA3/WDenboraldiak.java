@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import ERRONKA3.DAO.DenboraldiaDAO;
 import ERRONKA3.DAO.TaldeaDAO;
 import ERRONKA3.klaseak.Denboraldia;
+import ERRONKA3.klaseak.FTPUploader;
 import ERRONKA3.klaseak.Jardunaldia;
 import ERRONKA3.klaseak.Jokalaria;
 import ERRONKA3.klaseak.Partidua;
@@ -89,14 +90,15 @@ public class WDenboraldiak extends JPanel {
 	                    	JOptionPane.showMessageDialog(null, "Denboraldi bat jokatzen ari da.","Error",JOptionPane.ERROR_MESSAGE);
 	                    }else {
                     		
-                    		Date data = new Date();
-                    		boolean exist = denboraldiaDao.DenboraldiDataGaldetu(data);
+                    		Date data = new Date(System.currentTimeMillis());
+                    		Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(data);
+                            int year = calendar.get(Calendar.YEAR);
+                    		boolean exist = denboraldiaDao.DenboraldiDataGaldetu(year);
                             if (exist == true) {
                                 // Si hay una denboraldia en el año actual, suma un año a la fecha
-                            	 Calendar calendar = Calendar.getInstance();
-                                 calendar.setTime(data);
                                  calendar.add(Calendar.YEAR, 1);
-                                 data = calendar.getTime();
+                                 data = new Date(calendar.getTimeInMillis());
                             }
 							Denboraldia denboraldia = new Denboraldia();
 							java.sql.Date sqlDate = new java.sql.Date(data.getTime());
@@ -213,7 +215,14 @@ public class WDenboraldiak extends JPanel {
 					
 					xml.denboraldiaXMLGeneratu(denboraldiHistoriala,taldeakList);
 					JOptionPane.showMessageDialog(null, "XML-a ongi sortuta.","Information",JOptionPane.INFORMATION_MESSAGE);
-					
+					/*int confirm = JOptionPane.showConfirmDialog(null,"Nahi duzu igo xml-a?","Konfimazioa",JOptionPane.YES_NO_OPTION);
+					if(confirm == JOptionPane.YES_OPTION) {
+						FTPUploader ftpuploader = new FTPUploader();
+
+			            ftpuploader.uploadFile("federazioa.xml", "/var/www/RUGBY3/federazioa.xml");
+					}*/
+		            
+
 				}catch (Exception ex) {
 		            JOptionPane.showMessageDialog(null, "Errorea xml sortzen.","Error",JOptionPane.ERROR_MESSAGE);
 		            ex.printStackTrace();

@@ -142,31 +142,39 @@ public class WTaldeak extends JPanel {
 		panel.add(btnGorde);
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TaldeaDAO taldeDao = new TaldeaDAO();
-				if (textIzena.getText().isEmpty() || textHerria.getText().isEmpty() || textZuzendaria.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null,"Datu guztiak sartu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
-				}else {
-					String Izena = textIzena.getText().toUpperCase();
-					String Herria = textHerria.getText().toUpperCase();
-					String Zuzendaria = textZuzendaria.getText().toUpperCase();
-					
-					boolean DBgaldetu = taldeDao.TaldeDBGaldetu(Izena);
-					
-						
-					if(DBgaldetu == true) {
-						JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+				if(taldeaList.size() < 6) {
+					TaldeaDAO taldeDao = new TaldeaDAO();
+					if (textIzena.getText().isEmpty() || textHerria.getText().isEmpty() || textZuzendaria.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null,"Datu guztiak sartu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
 					}else {
-						Taldea taldea = new Taldea();
-						taldea.setTalde_izena(Izena);
-						taldea.setHerria(Herria);
-						taldea.setZuzendaria(Zuzendaria);
-						taldeDao.insertTaldea(taldea);
-						textIzena.setText("");
-						textHerria.setText("");
-						textZuzendaria.setText("");
+						String Izena = textIzena.getText().toUpperCase();
+						String Herria = textHerria.getText().toUpperCase();
+						String Zuzendaria = textZuzendaria.getText().toUpperCase();
+						
+						boolean DBgaldetu = taldeDao.TaldeDBGaldetu(Izena);
+						
+							
+						if(DBgaldetu == true) {
+							JOptionPane.showMessageDialog(null, "Talde hau datu-basean erregistratu dago.", "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							Taldea taldea = new Taldea();
+							taldea.setTalde_izena(Izena);
+							taldea.setHerria(Herria);
+							taldea.setZuzendaria(Zuzendaria);
+							taldeDao.insertTaldea(taldea);
+							textIzena.setText("");
+							textHerria.setText("");
+							textZuzendaria.setText("");
+						}
+						taldeDao.deskonektatu();
 					}
-					taldeDao.deskonektatu();
+				}else {
+					JOptionPane.showMessageDialog(null,"Ezin da talde gehiago gorde, gehienez 6 gorde ahal direlako.","Error",JOptionPane.ERROR_MESSAGE);
+					textIzena.setText("");
+					textHerria.setText("");
+					textZuzendaria.setText("");
 				}
+				
 				taldeTaulaEguneratu();
 			}
 		});
@@ -228,6 +236,7 @@ public class WTaldeak extends JPanel {
 						}
 				       taldeDao.deskonektatu();   
 					}
+					
 					taldeTaulaEguneratu();
 		        } catch (Exception ex) {
 		            JOptionPane.showMessageDialog(null, "Errorea Taldea berriztatzean.","Error",JOptionPane.ERROR_MESSAGE);

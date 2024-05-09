@@ -57,10 +57,10 @@ public class DenboraldiaDAO {
 		}
 	}
 	
-	public boolean DenboraldiDataGaldetu(Date data){
+	public boolean DenboraldiDataGaldetu(int  year){
         String sql = "SELECT 1 FROM denboraldia WHERE YEAR(hasierako_data) = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
-        	statement.setInt(1, data.getYear());
+        	statement.setInt(1, year);
         	ResultSet resultSet = statement.executeQuery();
 
             // Si resultSet tiene al menos una fila, si hay nulo
@@ -202,11 +202,16 @@ public class DenboraldiaDAO {
 	}
 	
 	public java.sql.Date azkenDataLortu(Denboraldia denboraldia) {
-		String sql = "SELECT amaiera_data FROM jardunaldia WHERE denboraldia = ? ORDER BY jardunaldia_kod DESC LIMIT 1;";
+		String sql = "SELECT amaiera_data FROM jardunaldia WHERE denboraldia_kod = ? ORDER BY jardunaldia_kod DESC LIMIT 1;";
 		try(PreparedStatement statement = konexioa.prepareStatement(sql)) {
            statement.setInt(1, denboraldia.getDenboraldia_kod());
            ResultSet resultSet = statement.executeQuery();
-           return resultSet.getDate("amaiera_data");
+           if(resultSet.next()) {
+        	   return resultSet.getDate("amaiera_data");
+           }else {
+        	   return null;
+           }
+           
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -295,8 +295,6 @@ public class WJokalariak extends JPanel {
 		for (int i = 0; i < table.getColumnCount(); i++) {
 		    table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
-		
-		taldeakArrayListGorde();
 		filtrarTabla();
 	}
 	
@@ -313,6 +311,8 @@ public class WJokalariak extends JPanel {
 	
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
+		cmboxFiltrar.removeAllItems();
+		cmboxTaldea.removeAllItems();
 		
 		TaldeaDAO taldeaDao = new TaldeaDAO();	
 		
@@ -337,7 +337,7 @@ public class WJokalariak extends JPanel {
 	public int seleccionarCBPosizioa(String posizioa) {
 		int total = cmboxPosizioa.getItemCount();
 		for(int i = 0; i < total; i++) {
-			String cmboxIzena = cmboxPosizioa.getItemAt(i).toString();
+			String cmboxIzena = cmboxPosizioa.getItemAt(i).toString().toUpperCase();
 			if(posizioa.equals(cmboxIzena)) {
 				return i;
 			}
