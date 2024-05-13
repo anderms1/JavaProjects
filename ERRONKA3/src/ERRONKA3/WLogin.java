@@ -102,6 +102,9 @@ public class WLogin extends JFrame {
 		JLabel lblErregistratu = new JLabel("<html><u>¿Ez duzu konturik?</u></html>");
 		lblErregistratu.addMouseListener(new MouseAdapter() {
 			@Override
+			/**
+			 * Erregistratzeko lehioa ikusteko.
+			 */
 			public void mouseClicked(MouseEvent e) {
 				erregistratuLehioa.setLoginFrame(WLogin.this);
 				verPanel(erregistratuLehioa);
@@ -114,6 +117,9 @@ public class WLogin extends JFrame {
 		panel_1.add(lblErregistratu);
 		
 		JButton btnLogin = new JButton("Login");
+		/**
+		 * Login botoiari ematean eta kontu bat badekozu programan sartuko zara.
+		 */
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				char[] pasahitza = passwordField.getPassword();
@@ -145,6 +151,9 @@ public class WLogin extends JFrame {
 		passwordField.setBounds(51, 86, 285, 20);
 		panel_1.add(passwordField);
 	}
+	/**
+	 * Lehio batetik bestera joateko erabiltzen den funtzioa da.
+	 */
 	private void verPanel(JPanel panelNuevo) {
 		panelNuevo.setSize(contentPane.getSize());
 		contentPane.removeAll();
@@ -152,9 +161,15 @@ public class WLogin extends JFrame {
 		contentPane.repaint();
 		contentPane.revalidate();
 	}
+	/**
+	 * Login lehioa ikusteko
+	 */
 	public void mostrarLogin() {
 		verPanel(new WLogin().contentPane);
 	}
+	/**
+	 * Programan sartzeko erabiltzen da.
+	 */
 	private void mostrarMenu() {
 		WMenu menu = new WMenu();
         menu.setLocationRelativeTo(null);
@@ -163,6 +178,10 @@ public class WLogin extends JFrame {
         // Cerrar la ventana de login
         dispose();
 	}
+	/**
+	 * Datu-baseko pasahitza eta sartutako pasahitza compartuko egingo ea berdinak diren.
+	 * @return boolean
+	 */
 	private boolean pasahitzaBaieztatu(EntityManager em) {
 		//String password = String.valueOf(passwordField.getPassword());
 		Query qErabiltzaile = em.createQuery("SELECT COUNT(l) FROM Usuario l WHERE l.username ='" +txtErabiltzailea.getText().toUpperCase()+"' AND l.password = '"+ new String(passwordField.getPassword())
@@ -174,6 +193,10 @@ public class WLogin extends JFrame {
 			return false;
 		}
 	}
+	/**
+	 * Sartutako erabiltailea ea datu-basean existitzen den jakiteko da.
+	 * @return boolean
+	 */
 	public boolean ErabiltzaileaExistitu(EntityManager em) {
 		Query qErabiltzaile = em.createQuery("SELECT COUNT(Usuario) FROM Usuario  WHERE username='" +txtErabiltzailea.getText().toUpperCase()+"'", Usuario.class);
 		long usuarioEncontrado = (long) qErabiltzaile.getSingleResult();

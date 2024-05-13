@@ -143,6 +143,9 @@ public class WJokalariak extends JPanel {
 		table.setDefaultEditor(Object.class, null);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
+		/**
+		 * MouseClicked hau da taulan ilara bat klik egitean datuak textFilean jartzeko.
+		 */
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,6 +173,9 @@ public class WJokalariak extends JPanel {
 		JButton btnGorde = new JButton("Gorde");
 		btnGorde.setBounds(124, 64, 105, 27);
 		panel.add(btnGorde);
+		/**
+		 * Gorde botoia emateanjokalariaren izena, posizioa, dorsala eta taldea hartzen du eta datu-basean gorde egingo du.
+		 */
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int dorsala = (int) spinner.getValue();
@@ -205,6 +211,9 @@ public class WJokalariak extends JPanel {
 		btnEzabatu.setBounds(251, 64, 96, 27);
 		panel.add(btnEzabatu);
 		btnEzabatu.addActionListener(new ActionListener() {
+			/**
+			 * Ezabatu botoia ematean hautatutako ilara jokalrai datu-basetik ezabatuko egingo da..
+			 */
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int[]Indice = table.getSelectedRows();
@@ -231,6 +240,9 @@ public class WJokalariak extends JPanel {
 		
 		JButton btnBerriztatu = new JButton("Berriztatu");
 		btnBerriztatu.addActionListener(new ActionListener() {
+			/**
+			 * Berriztatu botoia ematean jokalariaren izenaren bitartez sartutako datuak beriztatutako egingo dira datu-basean.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				try {
 					int dorsala = (int) spinner.getValue();
@@ -270,6 +282,9 @@ public class WJokalariak extends JPanel {
 		chckbx = new JCheckBox("All");
 		chckbx.setSelected(true);
 		chckbx.addActionListener(new ActionListener() {
+			/**
+			 * Check egitean jokalari guztiak agertuko dira.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				filtrarTabla();
 			}
@@ -280,6 +295,9 @@ public class WJokalariak extends JPanel {
 		
 		cmboxFiltrar = new JComboBox();
 		cmboxFiltrar.addActionListener(new ActionListener() {
+			/**
+			 * Combo-ean hautatutako taldearen jokalriak agertuko dira, checkbox-a kenduta egon behar da.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				filtrarTabla();
 			}
@@ -298,7 +316,9 @@ public class WJokalariak extends JPanel {
 		filtrarTabla();
 	}
 	
-	
+	/**
+	 * Funztio hau jokalari guztiak lortzen ditu eta ArrayList batean gorde egingo du.
+	 */
 	public void jokalariakArrayListGorde() {
 		jokalariakList.clear();
 		
@@ -308,7 +328,9 @@ public class WJokalariak extends JPanel {
 		
 		jokalariaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau talde guztiak lortzen ditu eta ArrayList batean gorde egingo du.
+	 */
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
 		cmboxFiltrar.removeAllItems();
@@ -324,7 +346,10 @@ public class WJokalariak extends JPanel {
 		
 		taldeaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau izenaren bitartez taldea lortzen du.
+	 * @return Taldea
+	 */
 	public Taldea IzenarekinTaldeaLortu(String izena) {
 		for(Taldea taldea : taldeaList) {
 			if (taldea.getTalde_izena().equals(izena)) {
@@ -333,7 +358,10 @@ public class WJokalariak extends JPanel {
 		}
 		return null;
 	}
-	
+	/**
+	 * Funztio hau Ser posizioan dagoen hautatako posizioa da.
+	 * @return int
+	 */
 	public int seleccionarCBPosizioa(String posizioa) {
 		int total = cmboxPosizioa.getItemCount();
 		for(int i = 0; i < total; i++) {
@@ -344,6 +372,10 @@ public class WJokalariak extends JPanel {
 		}
 		return -1;
 	}
+	/**
+	 * Funztio hau Hautatutako taldearen combobox jasotzeko da.
+	 * @return int
+	 */
 	public int seleccionarCBTaldea(String taldea) {
 		int total = cmboxTaldea.getItemCount();
 		for(int i = 0; i < total; i++) {
@@ -354,7 +386,9 @@ public class WJokalariak extends JPanel {
 		}
 		return -1;
 	}
-	
+	/**
+	 * Funztio hau filtratzeko erabiltzen da jComboBox eta checkBox-en arabera.
+	 */
 	public void filtrarTabla() {
 		jokalariakArrayListGorde();
 		boolean check = chckbx.isSelected();

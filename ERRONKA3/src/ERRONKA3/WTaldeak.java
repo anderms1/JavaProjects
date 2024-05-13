@@ -117,6 +117,9 @@ public class WTaldeak extends JPanel {
 		scrollPane = new JScrollPane(table);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
+			/**
+			 * MouseClicked hau da taulan ilara bat klik egitean datuak textFilean jartzeko.
+			 */
 			public void mouseClicked(MouseEvent e) {
 				int[]Indice = table.getSelectedRows();
 				String izena = null;
@@ -141,6 +144,9 @@ public class WTaldeak extends JPanel {
 		btnGorde.setBounds(91, 61, 104, 29);
 		panel.add(btnGorde);
 		btnGorde.addActionListener(new ActionListener() {
+			/**
+			 * Botoi hau taldearen izena, herria eta zuzendaria hartzen du eta datu basean gorde egiten du.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				if(taldeaList.size() < 6) {
 					TaldeaDAO taldeDao = new TaldeaDAO();
@@ -184,6 +190,9 @@ public class WTaldeak extends JPanel {
 		btnEzabatu.setBounds(230, 61, 104, 29);
 		panel.add(btnEzabatu);
 		btnEzabatu.addActionListener(new ActionListener() {
+			/**
+			 * Botoi hau taulan ilara bat klik egitena eta botoiari ematean datu-basetik taldea ezabatzen du.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				try {
 					TaldeaDAO taldeDao = new TaldeaDAO();
@@ -211,6 +220,9 @@ public class WTaldeak extends JPanel {
 		
 		JButton btnBerriztatu = new JButton("Berriztatu");
 		btnBerriztatu.addActionListener(new ActionListener() {
+			/**
+			 * Botoi hau ematean taldearen izenaren bitartez berriztatu egingo sartuko datuak.
+			 */
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (textIzena.getText().isEmpty() || textZuzendaria.getText().isEmpty() || textHerria.getText().isEmpty()) {
@@ -248,7 +260,9 @@ public class WTaldeak extends JPanel {
 		panel.add(btnBerriztatu);
 		
 	}
-	
+	/**
+	 * Funtzio hau deitzean taulan taldeak eguneratuko dira.
+	 */
 	public void taldeTaulaEguneratu() {
 		taldeakArrayListGorde();
 		table.setModel(dtmTaula);
@@ -259,6 +273,9 @@ public class WTaldeak extends JPanel {
 		}
 		
 	}
+	/**
+	 * Funtzio hau taldeak ArrayList batean gorde egiten ditu.
+	 */
 	public void taldeakArrayListGorde() {
 		taldeaList.clear();
 		

@@ -48,7 +48,9 @@ import ERRONKA3.WJokalariak;
 		
 	
 		/**
-		 * Create the frame.
+		 * @author Ander, Andoni, Unax eta Alazne.
+		 * @version 1.0
+		 * @since 15/05/2024
 		 */
 		public WMenu() {
 			setTitle("RUGBY Federezio Softwarea");
@@ -122,6 +124,9 @@ import ERRONKA3.WJokalariak;
 			
 			JMenuItem mntmDenboraldiak = new JMenuItem("Denboraldiak");
 			denboraldiakLehioa = new WDenboraldiak();
+			/*
+			 * Denboraldi lehioa irekitzeko.
+			 */
 			mntmDenboraldiak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					denboraldiakLehioa.jokatzenDenboraldiaArrayListGorde();
@@ -151,7 +156,7 @@ import ERRONKA3.WJokalariak;
 			JMenuItem mntArgazkiak = new JMenuItem("Argazkiak");
 			argazkiakLehioa = new WArgazkiak();
 			/**
-			 * Sailkapena lehioa irekitzeko
+			 * Argazkiak lehioa irekitzeko
 			 */
 			mntArgazkiak.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ERRONKA3"},{"l":"ERRONKA3.DAO"},{"l":"ERRONKA3.klaseak"}];updateSearchResults();

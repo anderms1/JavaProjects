@@ -20,7 +20,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
-
+/*
+ * Datu-baseko denboraldi taulari kontsultak egiteko.
+ */
 public class DenboraldiaDAO {
 	private Connection konexioa;
 	MySQL mysql = new MySQL();
@@ -29,7 +31,9 @@ public class DenboraldiaDAO {
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Funtzioa hau Datu basean denboraldi berri bat sartzeko da.
+	 */
 	public void insertDenboraldia(Denboraldia denboraldia){
         String sql ="INSERT INTO denboraldia(hasierako_data) VALUES (?)";
         try {
@@ -41,7 +45,9 @@ public class DenboraldiaDAO {
 			e.printStackTrace();
 		}
     }
-	
+	/**
+	 * Funtzio hau datu basean denboraldia bat berristatzeko da.
+	 */
 	public void updateDenboraldia(Denboraldia denboraldia) {
 		String sql ="UPDATE denboraldia SET amaierako_data = ? WHERE denboraldia_kod = ?";
         try {
@@ -54,7 +60,10 @@ public class DenboraldiaDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzio hau denboraldi bat urte bat duen jakiteko da.
+	 * @return boolean
+	 */
 	public boolean DenboraldiDataGaldetu(int  year){
         String sql = "SELECT 1 FROM denboraldia WHERE YEAR(hasierako_data) = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -69,7 +78,9 @@ public class DenboraldiaDAO {
 			return false;
 		}
     }
-	
+	/**
+	 * Funtzio hau denb_taldea-n denboraldi eta talde jokatzen hari diren sartzeko da.
+	 */
 	public void insertDenb_Taldea(Denboraldia denboraldia, Taldea taldea) {
 		String sql ="INSERT INTO denb_taldea(denboraldia_kod, talde_kod) VALUES (?, ?)";
         try {
@@ -82,7 +93,9 @@ public class DenboraldiaDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzio hau da denboraldi bat dagoen amaierako_data null dena.
+	 */
 	public boolean DenboraldiaDBGaldetu(){
         String sql = "SELECT 1 FROM denboraldia WHERE amaierako_data is NULL";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -97,7 +110,10 @@ public class DenboraldiaDAO {
 			return false;
 		}
     }
-	
+	/**
+	 * Funtzio hau denboraldi guztiak lortzen ditu eta arrayList baten gorde egiten ditu.
+	 * @retun ArrayList <Denboraldia>
+	 */
 	public ArrayList<Denboraldia> getHistorialDenboraldia(){
 		ArrayList<Denboraldia> denboraldiHistoriala = new ArrayList<Denboraldia>();
 		JardunaldiaDAO jardunaldiaDao = new JardunaldiaDAO();
@@ -119,7 +135,11 @@ public class DenboraldiaDAO {
         jardunaldiaDao.deskonektatu();
         return denboraldiHistoriala;
 	}
-	
+	/**
+	 * Funtzio hau jokatzen hari den denboraldia arrayList batean gordetzen du, jokatzen hari diren denboraldia
+	 * amierako_dat null dena da.
+	 * @return ArrayList<Denboraldia>
+	 */
 	public ArrayList<Denboraldia> getJokatzenDenboraldia(){
 		ArrayList<Denboraldia> denboraldiHistoriala = new ArrayList<Denboraldia>();
         String sql = "SELECT * FROM denboraldia WHERE amaierako_data is null";
@@ -137,7 +157,9 @@ public class DenboraldiaDAO {
 		}
         return denboraldiHistoriala;
 	}
-	
+	/**
+	 * Funtzio hau datu-basean jardunaldi berri bat sartuko du.
+	 */
 	public void insertJardunaldia(Jardunaldia jardunaldia) {
 		 String sql = "INSERT INTO jardunaldia(denboraldia_kod, hasiera_data, amaiera_data) VALUES(?, ?, ?)";
 		 try {
@@ -151,7 +173,9 @@ public class DenboraldiaDAO {
 				e.printStackTrace();
 			}
 	}
-	
+	/**
+	 * Funtzio honen bitartez, data emanez, bere jardunaldia_kod lortuko du.
+	 */
 	public int JardunaldiaKodLortu(Date data) {
 		String sql = "SELECT jardunaldia_kod FROM jardunaldia WHERE hasiera_data = ?";
 		 try(PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -167,7 +191,9 @@ public class DenboraldiaDAO {
 		}
 		 return -1;
 	}
-	
+	/**
+	 * Funtzio honek datu-basean, partidua taulan, partidu berri bat sartuko du.
+	 */
 	public void insertPartidua(Partidua partidua) {
 		String sql = "INSERT INTO partidua(jardunaldia_kod, denboraldia_kod, etxeko_talde_kod, kanpoko_talde_kod, data) VALUES(?, ?, ?, ?, ?)";
 		 try {
@@ -183,7 +209,10 @@ public class DenboraldiaDAO {
 				e.printStackTrace();
 			}
 	}
-	
+	/**
+	 * Funtzio honen bitartez partiduak jokatu diren edo ez galdetu da, emaitza null bada es da jokatu.
+	 * @return boolean
+	 */
 	public boolean partiduakAmaituGaldetu(Denboraldia denboraldia) {
 		String sql = "SELECT 1 FROM partidua WHERE emaitza IS NULL AND denboraldia_kod = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -198,7 +227,10 @@ public class DenboraldiaDAO {
 			return false;
 		}
 	}
-	
+	/**
+	 * Funtzio honen azken jardunaldiaren data lortzeko da, horrela denboraldiaren amaiera_data jarriko zaio.
+	 * @return java.sql.Date
+	 */
 	public java.sql.Date azkenDataLortu(Denboraldia denboraldia) {
 		String sql = "SELECT amaiera_data FROM jardunaldia WHERE denboraldia_kod = ? ORDER BY jardunaldia_kod DESC LIMIT 1;";
 		try(PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -216,7 +248,11 @@ public class DenboraldiaDAO {
 		}
 		return null;
 	}
-	
+	/**
+	 * Funtzio honen bitartez jokalari guztiak lortuko dira bere taldea ere jarriz eta ArrayList batean 
+	 * gordeko dira.
+	 * @return ArrayList<Jokalaria>
+	 */
 	public ArrayList<Jokalaria> getAllJokalariak(){
 		ArrayList<Jokalaria> jokalariak = new ArrayList<Jokalaria>();
 		TaldeaDAO taldeaDao = new TaldeaDAO();

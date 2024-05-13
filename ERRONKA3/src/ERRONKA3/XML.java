@@ -13,6 +13,9 @@ import ERRONKA3.klaseak.Partidua;
 import ERRONKA3.klaseak.Taldea;
 
 public class XML {
+	/**
+	 * Funtzio hau denboraldi guztien XML bat sortzeko da, bere taldeekin denboraldearekin jardunaldeekin eta partiduekin.
+	 */
 	public void denboraldiaXMLGeneratu(ArrayList<Denboraldia> denboraldiak, ArrayList<Taldea> taldeak) {
 		String [] escudo = new String[] {"gernika.jpg","durango.png","arratiko zekorrak.jpg","getxo.jpg","eibar.jpg","arrasate.png"};
 		try (FileWriter writer = new FileWriter("federazioa.xml")) {

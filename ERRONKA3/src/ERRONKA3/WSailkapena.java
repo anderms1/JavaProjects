@@ -74,7 +74,9 @@ public class WSailkapena extends JPanel {
 		jokatzenDenboraldiaGorde();
 		taulaEguneratu();
 	}
-	
+	/**
+	 * Funtzio hau ArrayList batean jokatzen ari den denboraldia gordetzeko erabiltzen da.
+	 */
 	public void jokatzenDenboraldiaGorde() {
 		jokatzenDenb.clear();
 		
@@ -84,7 +86,9 @@ public class WSailkapena extends JPanel {
 		
 		denboraldiaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau jokatzen hari diren denboraldi taldeak ArrayList batean gordetzeko da.
+	 */
 	public void taldeakArrayListGorde() {
 		taldeakList.clear();
 		
@@ -94,7 +98,9 @@ public class WSailkapena extends JPanel {
 		
 		denb_taldeaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau deitzena taula eguneratu eta ordenatu egingo da puntuen arabaera.
+	 */
 	public void taulaEguneratu() {
 		taldeakArrayListGorde();
 		

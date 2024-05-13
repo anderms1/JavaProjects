@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+/*
+ * Datu-baseko partidua taulari kontsultak egiteko.
+ */
 public class PartiduaDAO {
 	private Connection konexioa;
 	MySQL mysql = new MySQL();
@@ -22,7 +24,9 @@ public class PartiduaDAO {
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Funtzioa hau datubaseko partidua taularen partiduari berrizketak egiteko da.
+	 */
 	public void updatePartidua(Partidua partidua) {
 		String sql = "UPDATE partidua SET emaitza = ? WHERE partidua_kod = ? AND jardunaldia_kod = ? AND denboraldia_kod = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -37,7 +41,10 @@ public class PartiduaDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzio hau jardunaldi baten partiduak lortzeko da.
+	 * @return ArrayList<Partidua>
+	 */
 	public ArrayList<Partidua> jardunaldiPartiduakLortu(Jardunaldia jardunaldia){
 		ArrayList<Partidua> partiduak = new ArrayList<Partidua>();
 		TaldeaDAO taldeaDao = new TaldeaDAO();
@@ -70,7 +77,9 @@ public class PartiduaDAO {
 		taldeaDao.deskonektatu();
 		return partiduak;
 	}
-	
+	/**
+	 * Funtzioa hau datu-baseko denb_taldea taularen denboraldia eta taldea berriztatzen du.
+	 */
 	public void updateDenb_taldea(Taldea taldea, Denboraldia denboraldia) {
 		String sql = "UPDATE denb_taldea SET puntuak = puntuak + ?, irabaziak = irabaziak + ?, porrotak = porrotak + ?, berdinketak = berdinketak + ? WHERE denboraldia_kod = ? AND	talde_kod = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -86,7 +95,10 @@ public class PartiduaDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzio hau partidu bat maitu den jakiteko da.
+	 * @return boolean
+	 */
 	public boolean partiduaAmaitutaGaldetu(Partidua partidua) {
 		String sql = "SELECT 1 FROM partidua WHERE partidua_kod = ? AND jardunaldia_kod = ? AND denboraldia_kod = ? AND emaitza IS NOT NULL";
 		try (PreparedStatement statement = konexioa.prepareStatement(sql)) {

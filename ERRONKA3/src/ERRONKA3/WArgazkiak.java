@@ -159,24 +159,28 @@ public class WArgazkiak extends JPanel {
 		panel.add(lblNewLabel_3_1);
 		
 	}
-	  private void copiarArchivo(File archivoOrigen, File archivoDestino) throws IOException {
-	        FileInputStream fis = null;
-	        FileOutputStream fos = null;
-	        try {
-	            fis = new FileInputStream(archivoOrigen);
-	            fos = new FileOutputStream(archivoDestino);
-	            byte[] buffer = new byte[1024];
-	            int length;
-	            while ((length = fis.read(buffer)) > 0) {
-	                fos.write(buffer, 0, length);
-	            }
-	        } finally {
-	            if (fis != null) {
-	                fis.close();
-	            }
-	            if (fos != null) {
-	                fos.close();
-	            }
-	        }
-	    }
+	/**
+	 * Funztio hau ordenagailuaren fitxategia kopia bat egiteko betse FILE batean, hau ahalbidetzen du fitxategia
+	 * zerbitzarian igo.
+	 */
+	private void copiarArchivo(File archivoOrigen, File archivoDestino) throws IOException {
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream(archivoOrigen);
+            fos = new FileOutputStream(archivoDestino);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        }
+    }
 }

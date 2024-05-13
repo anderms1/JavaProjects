@@ -66,6 +66,9 @@ public class WErregistratu extends JPanel {
 		panel.add(txtErabiltzailea);
 		
 		JButton btnErregistratu = new JButton("Erregistratu");
+		/**
+		 * Erregistartu botoia ematena datu-basean sartutako datuak gorde egingo dira
+		 */
 		btnErregistratu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				char[] pasahitza = passPasahitza.getPassword();
@@ -115,10 +118,16 @@ public class WErregistratu extends JPanel {
 		panel.add(passPasahitza2);
 
 	}
-	
+	/**
+	 * Login lehioa ikusteko;
+	 */
 	public void setLoginFrame(WLogin loginLehioa) {
         this.loginLehioa = loginLehioa;
     }
+	/**
+	 * Funtzio hau erabilltzailea existitzen den datu-basean jakiteko da.
+	 * @return boolean
+	 */
 	public boolean ErabiltzaileaExistitu(EntityManager em) {
 		Query qErabiltzaile = em.createQuery("SELECT COUNT(Usuario) FROM Usuario  WHERE username='" +txtErabiltzailea.getText().toUpperCase()+"'", Usuario.class);
 		long usuarioEncontrado = (long) qErabiltzaile.getSingleResult();

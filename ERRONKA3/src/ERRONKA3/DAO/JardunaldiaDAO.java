@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+/*
+ * Datu-baseko jardunaldi taulari kontsultak egiteko.
+ */
 public class JardunaldiaDAO {
 private Connection konexioa;
 MySQL mysql = new MySQL();
@@ -21,7 +23,10 @@ MySQL mysql = new MySQL();
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Funtzio hau denboraldi baten jardunaldiak lortzeko erabiltzen da, ere partiduak lortzen dira.
+	 * @return ArrayList<Jardunaldia>
+	 */
 	public ArrayList<Jardunaldia> denboraldiJardunaldiakLortu(Denboraldia denboraldia){
 		ArrayList<Jardunaldia> jardunaldiak = new ArrayList<Jardunaldia>();
 		PartiduaDAO partiduaDao = new PartiduaDAO();

@@ -5,14 +5,18 @@ import java.io.IOException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 /**
- * Klase hau erabiltzen da serbitzariari fitxategiak igotzeko.
+ * Zerbitzariaren MySQL-ren konexioa erabiliz(pingServer) ftp bidez igotzen ditu fitxategiak.
  */
 public class FTPUploader {
 
     private int port = 21;
     private String user = "mrweb";
     private String pass = "I_113";
-
+    /**
+     * uploadFile artzen du nahi dugun fitxategia eta non kokatunai dugu zerbitzarian eta igotzen du.
+     * @param Local
+     * @param server
+     */
     public void uploadFile(String Local, String server) {
         FTPClient ftpClient = new FTPClient();
         try {
@@ -23,9 +27,10 @@ public class FTPUploader {
 
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            // Ruta del archivo local
+            // Fitxategiaren hibilbidea
             String firstLocalFile = Local;
 
+            // Fitxategia sortu eta zerbitzeriaren hibilibidean sartu
             try (FileInputStream input = new FileInputStream(firstLocalFile)) {
                 boolean done = ftpClient.storeFile(server, input);
                 if (done) {
@@ -38,6 +43,7 @@ public class FTPUploader {
             System.out.println("Error: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
+        	// ftp-a deskonektatu
             try {
                 if (ftpClient.isConnected()) {
                     ftpClient.disconnect();

@@ -1,4 +1,4 @@
-package ERRONKA3;
+	package ERRONKA3;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -80,6 +80,9 @@ public class WDenboraldiak extends JPanel {
 		panel.setLayout(null);
 		
 		JButton btnDBerria = new JButton("Denboraldi Berria Hasi");
+		/**
+		 * Botoi hau ematean denboraldi berri bat sortuko da bere jardunaldiekin eta partiduekin sortuta.
+		 */
 		btnDBerria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -126,6 +129,9 @@ public class WDenboraldiak extends JPanel {
 		panel.add(btnDBerria);
 		
 		JButton btnDAmaitu = new JButton("Denboraldia Amaitu");
+		/**
+		 * Partidu guztiak amaituta denboraldia amaitzeko botoia da.
+		 */
 		btnDAmaitu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -195,6 +201,9 @@ public class WDenboraldiak extends JPanel {
 		add(lblNewLabel_1);
 		
 		JButton btnXMLGeneratu = new JButton("XML Sortu");
+		/**
+		 * Botoi hau ematean XML bat sortuko da denboraldi ez egon arren.
+		 */
 		btnXMLGeneratu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -237,7 +246,9 @@ public class WDenboraldiak extends JPanel {
 		comprobarEstadoDenboraldia();
 		taldeakArrayListGorde();
 	}
-	
+	/**
+	 * Funztio hau denb_taldea sortzeko da, eta denboraldia eta taldeak hartuko ditu.
+	 */
 	public void denb_taldeGeneratu(Denboraldia denboraldia) {
 		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
 		
@@ -246,7 +257,9 @@ public class WDenboraldiak extends JPanel {
 		}
 		denboraldiaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau sortutako denboraldian jardunaldiak sortuko ditu.
+	 */
 	public void JardunaldiakGeneratu(Denboraldia denboraldia) {
 		
 		int numEquipos = taldeakList.size();
@@ -333,7 +346,9 @@ public class WDenboraldiak extends JPanel {
         }
         denboraldiaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau denboraldi guztiak ArrayList batean gordetzeko daS.
+	 */
 	public void DenboraldiHistorialaArrayListGorde() {
 		denboraldiHistoriala.clear();
 		
@@ -343,7 +358,9 @@ public class WDenboraldiak extends JPanel {
 		
 		denboraldiaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau taula osatzeko da denboraldi guztiekin.
+	 */
 	public void TaulaOsatu() {
 		DenboraldiHistorialaArrayListGorde();
 		dtmTaula.setRowCount(0);
@@ -363,6 +380,9 @@ public class WDenboraldiak extends JPanel {
 			}
 		}	
 	}
+	/**
+	 * Funztio hau denboraldia amaitu den edo ez jakiteko da eta lbl bat eguneratzeko.
+	 */
 	public void comprobarEstadoDenboraldia() {
 		DenboraldiaDAO denboraldiaDao = new DenboraldiaDAO();
 		boolean estado = denboraldiaDao.DenboraldiaDBGaldetu();
@@ -373,7 +393,9 @@ public class WDenboraldiak extends JPanel {
         	lblJokatzen.setVisible(false);
         }
 	}
-	
+	/**
+	 * Funtzio hau taldeguztiak ArrayList batean gorde egingo ditu.
+	 */
 	public void taldeakArrayListGorde() {
 		taldeakList.clear();
 		
@@ -383,7 +405,9 @@ public class WDenboraldiak extends JPanel {
 		
 		taldeaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funztio hau jokatzen hari den denboraldia ArrayList batean gordetzeko da.
+	 */
 	public void jokatzenDenboraldiaArrayListGorde() {
 		jokatzendenboraldi.clear();
 		

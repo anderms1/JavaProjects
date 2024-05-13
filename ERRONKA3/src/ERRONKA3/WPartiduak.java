@@ -92,6 +92,10 @@ public class WPartiduak extends JPanel {
 		panel.add(lblNewLabel_2);
 		
 		JButton btnGorde = new JButton("Gorde");
+		/**
+		 * Gorde botoirari ematen JTextField sartutako datuak hartuko ditu eta partiduko horretako emaitzan gordetuko
+		 * egingo du datu-basean.
+		 */
 		btnGorde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -230,13 +234,18 @@ public class WPartiduak extends JPanel {
 		partiduakJardunaldianGorde();
 		updateComboxak();
 		
+		/**
+		 * ComboBox-ean jardunaldia hautatzean jokatzen diren partiduak agertuko dira.
+		 */
 		cmbJardunaldiak.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				partiduakIrakutsi();
 			}
 		});
 	}
-	
+	/**
+	 * Funtzio hau jokatzen hari diren taldeak ArrayList batean gordeko dira.
+	 */
 	public void taldeakArrayListGorde() {
 		taldeakList.clear();
 		
@@ -246,7 +255,10 @@ public class WPartiduak extends JPanel {
 		
 		taldeaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau jokatzen hari den denboraldia gordeko da ArrayList batean, 
+	 * ere jardunaldiak gordetzen dira.
+	 */
 	public void jokatzenDenboraldiaArrayListGorde() {
 		denboraldia.clear();
 		
@@ -259,7 +271,9 @@ public class WPartiduak extends JPanel {
 		denboraldiaDao.deskonektatu();
 		jardunaldiaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau partiduak jardunaldian gordetzeko da
+	 */
 	public void partiduakJardunaldianGorde(){
 		partiduak.clear();
 		
@@ -274,7 +288,9 @@ public class WPartiduak extends JPanel {
 		}
 		partiduaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau comboBox-ean sartuko ditu jardunaldi guztiak.
+	 */
 	public void updateComboxak() {
 		Denboraldia denb =  new Denboraldia();
 		if (denboraldia.size() > 0) {
@@ -287,7 +303,9 @@ public class WPartiduak extends JPanel {
 			cmbJardunaldiak.addItem("Jardunaldia: "+jardunaldia.getHasierako_data());	
 		}
 	}
-	
+	/**
+	 * Funtzio hau hautatutako jardunaldiaren arabera partiduak agertuko dira.
+	 */
 	public void partiduakIrakutsi() {
 		int i = cmbJardunaldiak.getSelectedIndex();
 		PartiduaDAO partiduaDao = new PartiduaDAO();
@@ -348,7 +366,9 @@ public class WPartiduak extends JPanel {
 		}
 		partiduaDao.deskonektatu();
 	}
-	
+	/**
+	 * Funtzio hau partiuen-en emaitxaren arabaera taldeei puntuak emateko da.
+	 */
 	public void puntuakEman(Jardunaldia jardunaldia) {
 		TaldeaDAO taldeaDao = new TaldeaDAO();
 		PartiduaDAO partiduaDao = new PartiduaDAO();

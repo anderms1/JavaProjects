@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+/*
+ * Datu-baseko Jokalaria taulari kontsultak egiteko.
+ */
 public class JokalariaDAO {
 private Connection konexioa;
 private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
@@ -22,7 +24,10 @@ MySQL mysql = new MySQL();
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Funtzio hua jokalari guztiak lortzeko erabiltzen da.
+	 * @return ArrayList<Jokalaria>
+	 */
 	public ArrayList<Jokalaria> getAllJokalariak(){
 		ArrayList<Jokalaria> taldeakList = new ArrayList<Jokalaria>();
         String sql = "SELECT * FROM jokalaria";
@@ -44,7 +49,9 @@ MySQL mysql = new MySQL();
 		}
         return taldeakList;
 	}
-	
+	/**
+	 * Funtzioa hau datu-baseko jokalaria taulan jokalari berri bat sartzeko da.
+	 */
 	public void insertJokalaria(Jokalaria jokalaria){
         String sql ="INSERT INTO jokalaria(izena, dorsala, posizioa, talde_kod) VALUES (?, ?, ?, ?)";
         try {
@@ -59,7 +66,9 @@ MySQL mysql = new MySQL();
 			e.printStackTrace();
 		}
     }
-	
+	/**
+	 * Funtzioa hau datu-baseko jokalaria taulan jokalari berriztatzeko da.
+	 */
 	public void updateJokalaria(Jokalaria jokalaria) {
 		String sql = "UPDATE jokalaria SET izena = ?, dorsala = ?, posizioa = ?, talde_kod = ? WHERE izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -74,7 +83,9 @@ MySQL mysql = new MySQL();
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzioa hau datu-baseko jokalaria taulan jokalari ezabatzeko da.
+	 */
 	public void deleteJokalaria(String izena){
         String sql = "DELETE FROM jokalaria WHERE izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -85,7 +96,10 @@ MySQL mysql = new MySQL();
 			e.printStackTrace();
 		}
     }
-	
+	/**
+	 * Funtzioa hau izenaren bitartez jokalria lortzeko da
+	 * @return boolena
+	 */
 	public boolean JokalariaDBGaldetu(String izena){
         String sql = "SELECT 1 FROM jokalaria WHERE izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -101,6 +115,10 @@ MySQL mysql = new MySQL();
 			return false;
 		}
     }
+	/**
+	 * Funtzioa hau kodearekin taldea lortzeko da.
+	 * @return Taldea
+	 */
 	private Taldea kodearekinTaldeaLortu(int talde_kod) {
 		TaldeaDAO taldeDao = new TaldeaDAO();
 		taldeaList = taldeDao.getAllTaldeak();

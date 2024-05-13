@@ -64,6 +64,9 @@ public class WSailkapenHistoriala extends JPanel {
 		add(scrollPane);
 		
 		comboBox = new JComboBox();
+		/**
+		 * JComboBox-ean hautaketa egitean sailkapena eguneratuko da denboraldiaren arabera.
+		 */
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				taulaEguneratu();
@@ -74,7 +77,9 @@ public class WSailkapenHistoriala extends JPanel {
 		denboraldiaHistorialaGorde();
 		taulaEguneratu();
 	}
-	
+	/**
+	 * Denboraldia guztiak ArrayList batena gorde egingo dira
+	 */
 	public void denboraldiaHistorialaGorde() {
 		denboraldiHistoriala.clear();
 		comboBox.removeAllItems();
@@ -91,7 +96,9 @@ public class WSailkapenHistoriala extends JPanel {
 		denboraldiaDao.deskonektatu();
 		
 	}
-	
+	/**
+	 * Funtzio hau deitzean taula eguneratuko egingo da.
+	 */
 	public void taulaEguneratu() {
 		String data = null;
 		if(comboBox.getSelectedItem() != null) {
@@ -105,7 +112,9 @@ public class WSailkapenHistoriala extends JPanel {
 			}
 		}
 	}
-	
+	/**
+	 * Funtzio hau rabiltzen da denboraldiaren bitartez eta puntuen bitartez taldeak ordenatzeko.
+	 */
 	public void taulaOrdenatu() {
 		model.setRowCount(0);
 		Taldea swap;
@@ -149,7 +158,9 @@ public class WSailkapenHistoriala extends JPanel {
 			table.setRowHeight(i, 38);
 		}
 	}
-	
+	/**
+	 * Funtzio hau talde guztiak ArrayList batean gordetzeko erabiltzen da, denboraldiaren arabera.
+	 */
 	public void taldeakListGorde(Denboraldia denboraldia) {
 		taldeakList.clear();
 		

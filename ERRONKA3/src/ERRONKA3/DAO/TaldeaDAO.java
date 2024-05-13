@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+/*
+ * Datu-baseko Taldea taulari kontsultak egiteko.
+ */
 public class TaldeaDAO {
 	private Connection konexioa;
 	MySQL mysql = new MySQL();
@@ -20,7 +22,10 @@ public class TaldeaDAO {
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Funtzio hau talde guztiak lortzeko da.
+	 * @return ArrayList<Taldea>
+	 */
 	public ArrayList<Taldea> getAllTaldeak(){
 		ArrayList<Taldea> taldeakList = new ArrayList<Taldea>();
         String sql = "SELECT * FROM taldea";
@@ -40,7 +45,9 @@ public class TaldeaDAO {
 		}
         return taldeakList;
 	}
-	
+	/**
+	 * Funtzio hau datu-baseko talde taulan talde berri bat sartzeko da.
+	 */
 	public void insertTaldea(Taldea taldea){
         String sql ="INSERT INTO taldea(talde_izena, herria, zuzendaria) VALUES (?, ?, ?)";
         try {
@@ -54,7 +61,9 @@ public class TaldeaDAO {
 			e.printStackTrace();
 		}
     }
-	
+	/**
+	 * Funtzio hau datu-baseko talde taulan talde berriztatzeko da.
+	 */
 	public void updateTaldea(Taldea taldea) {
 		String sql = "UPDATE taldea SET talde_izena = ?, herria = ?, zuzendaria = ? WHERE talde_izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -68,7 +77,9 @@ public class TaldeaDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Funtzio hau datu-baseko talde taulan talde bat ezatzeko da.
+	 */
 	public void deleteTaldea(String izena){
         String sql = "DELETE FROM taldea WHERE talde_izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -79,7 +90,10 @@ public class TaldeaDAO {
 			e.printStackTrace();
 		}
     }
-	
+	/**
+	 * Funtzio hau izenaren bitartez taldea sartuta dagoen da..
+	 * @return boolean
+	 */
 	public boolean TaldeDBGaldetu(String izena){
         String sql = "SELECT 1 FROM taldea WHERE talde_izena = ?";
         try (PreparedStatement statement = konexioa.prepareStatement(sql)) {
@@ -95,7 +109,10 @@ public class TaldeaDAO {
 			return false;
 		}
     }
-	
+	/**
+	 * Funtzio hau kodearekin taldea lortzeko da.
+	 * @return Taldea.
+	 */
 	public Taldea getTaldeaKodearekin(int kod) {
 		Taldea taldea = new Taldea();
 		String sql = "SELECT * FROM taldea WHERE talde_kod = ?";
@@ -114,7 +131,10 @@ public class TaldeaDAO {
 		}
 		return taldea;
 	}
-	
+	/**
+	 * Funtzio hau taldea objetua izenaren bitartez lortzeko da.
+	 * @return Taldea
+	 */
 	public Taldea getTaldeaIzenarekin(String izena) {
 		Taldea taldea = new Taldea();
 		String sql = "SELECT * FROM taldea WHERE talde_izena = ?";

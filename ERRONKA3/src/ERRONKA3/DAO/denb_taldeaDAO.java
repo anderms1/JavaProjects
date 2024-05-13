@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import ERRONKA3.klaseak.Denboraldia;
 import ERRONKA3.klaseak.MySQL;
 import ERRONKA3.klaseak.Taldea;
-
+/*
+ * Datu-baseko denb_taldea taulari kontsultak egiteko.
+ */
 public class denb_taldeaDAO {
 	private Connection konexioa;
 	MySQL mysql = new MySQL();
@@ -19,7 +21,10 @@ public class denb_taldeaDAO {
 		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
 		konexioa = mysql.sqlConnect();
 	}
-	
+	/**
+	 * Denboraldian jokatzen hari diren taldeak hartzeko
+	 * @return ArrayList<Taldea>
+	 */
 	public ArrayList<Taldea> getJokatzenTaldeakList(Denboraldia denboraldia){
 		ArrayList<Taldea> taldeak = new ArrayList<Taldea>();
 		String sql = "SELECT * FROM denb_taldea JOIN taldea ON taldea.talde_kod = denb_taldea.talde_kod WHERE denb_taldea.denboraldia_kod = ?";
