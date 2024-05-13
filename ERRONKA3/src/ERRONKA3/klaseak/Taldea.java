@@ -2,7 +2,10 @@ package ERRONKA3.klaseak;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * Klase hau datu baseen datuak gordetzeko erabiltzen da eta talde_kod, talde_izena, herria, zuzendaria Taldea taulatik hartzen du, 
+ * alderantziz puntuak, wins, defeats eta ties denb_taldeatik hartzen ditu.
+ */
 public class Taldea {
 	private int talde_kod;
 	private String talde_izena;

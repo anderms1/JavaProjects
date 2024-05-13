@@ -5,10 +5,12 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/**
+ * MySQL klase hau erabiltzen da servitzariaren datu-basuarekin lotu ahal izteko.
+ */
 public class MySQL {
 	private Connection konexioa;
-		String ipa = "10.9.50.100";
+		String ipa = "localhost";
 		String dbname = "rugby";
 		String user = "java";
 		String pass = "";
@@ -17,16 +19,15 @@ public class MySQL {
 		@SuppressWarnings("unused")
 		public String pingServer() {
 			try {
-				String[] host = new String[] {/*"www.rugbyfederazioa.com", "10.9.50.100", */"localhost"} ;
+				String[] host = new String[] {"www.rugbyfederazioa.com", "localhost"} ;
 					for (int j = 0; j < host.length-1; j++){
 						String comando = "ping -c 1 " + host[j];
 		
 						Process proceso = Runtime.getRuntime().exec(comando);
 						BufferedReader reader = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
-		
-						@SuppressWarnings("unused")
-						String linea;
-		                for (int i = 0;(linea = reader.readLine()) != null; i++) return ipa = host[i];
+						if (!reader.readLine().contains("La solicitud de ping no pudo encontrar el host")) {
+							for (int i = 0; reader.readLine() != null; i++) return ipa = host[i]; break;
+						}
 		            }
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

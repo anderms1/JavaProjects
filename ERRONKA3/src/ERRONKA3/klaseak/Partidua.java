@@ -2,7 +2,10 @@ package ERRONKA3.klaseak;
 
 import java.sql.Date;
 import java.util.Objects;
-
+/**
+ * Partidua klasea partidua taulatik hartzen ditu datuak eta gorde egiten ditu paartidua_kod, 
+ * jardunaldia, denboraldia, etxeko_Taldea, kanpoko_taldea, data, etxekoGolak, kanpokoGolak.
+ */
 public class Partidua {
 	private	int partidua_kod;
 	private Jardunaldia jardunaldia;

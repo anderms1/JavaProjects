@@ -44,6 +44,7 @@ import ERRONKA3.WJokalariak;
 		WPartiduak partiduakLehioa;
 		WSailkapena sailkapenLehioa;
 		WSailkapenHistoriala sailkapenHistorialaLehioa;
+		WArgazkiak argazkiakLehioa;
 		
 	
 		/**
@@ -146,6 +147,18 @@ import ERRONKA3.WJokalariak;
 				}
 			});  
 			mnKudeatu.add(mntmPartiduak);
+			
+			JMenuItem mntArgazkiak = new JMenuItem("Argazkiak");
+			argazkiakLehioa = new WArgazkiak();
+			/**
+			 * Sailkapena lehioa irekitzeko
+			 */
+			mntArgazkiak.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					verPanel(argazkiakLehioa);
+				}
+			});
+			mnKudeatu.add(mntArgazkiak);
 			
 			JMenu mnIkusi = new JMenu("Ikusi");
 			menuBar.add(mnIkusi);

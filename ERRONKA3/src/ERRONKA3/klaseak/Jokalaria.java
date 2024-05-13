@@ -1,5 +1,7 @@
 package ERRONKA3.klaseak;
-
+/**
+ * Jokalaria klasea datu-baseko jokalaria taulatik atributuak gordetzeko da.
+ */
 public class Jokalaria extends Pertsona{
 	private static final long serialVersionUID = 1L;
 	private int jokalaria_kod;

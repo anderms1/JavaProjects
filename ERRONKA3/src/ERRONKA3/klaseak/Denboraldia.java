@@ -3,7 +3,9 @@ package ERRONKA3.klaseak;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * Klase hau datu-baseetako denboraldi taulatik hartzen ditu datuak eta gorde egiten dira klase honetan.
+ */
 public class Denboraldia {
 	private int denboraldia_kod;
 	private Date hasierako_data;

@@ -7,6 +7,7 @@ import ERRONKA3.DAO.*;
 import ERRONKA3.klaseak.Denboraldia;
 import ERRONKA3.klaseak.Jardunaldia;
 import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.MySQL;
 import ERRONKA3.klaseak.Partidua;
 import ERRONKA3.klaseak.Taldea;
 
@@ -22,14 +23,11 @@ import java.util.ArrayList;
 
 public class DenboraldiaDAO {
 	private Connection konexioa;
+	MySQL mysql = new MySQL();
 	
 	public DenboraldiaDAO() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
+		konexioa = mysql.sqlConnect();
 	}
 	
 	public void insertDenboraldia(Denboraldia denboraldia){
@@ -243,8 +241,8 @@ public class DenboraldiaDAO {
 	
 	public void deskonektatu(){
         try {
-			if (konexioa != null && !konexioa.isClosed()) {
-			    konexioa.close();
+			if (mysql.sqlConnect() != null && !mysql.sqlConnect().isClosed()) {
+				mysql.sqlConnect().close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

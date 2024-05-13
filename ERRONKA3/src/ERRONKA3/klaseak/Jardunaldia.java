@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import ERRONKA3.klaseak.Partidua;
-
+/**
+ * Jardunaldi klasea jardunaldi taulatik hartzen ditu dtuak eta gordetzen dira gero erabil ahal izateko, denboraldiaren bitartez
+ * hartzen dira jardunaldiak.
+ */
 public class Jardunaldia {
 	private int jardunaldia_kod;
 	private Denboraldia denboraldia_kod;

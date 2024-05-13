@@ -1,7 +1,9 @@
 package ERRONKA3.klaseak;
 
 import java.io.Serializable;
-
+/**
+ * Pertsona klase hau erabiltzen da heredatzeko.
+ */
 public class Pertsona implements Serializable{
 	private String izena;
 	private static final long serialVersionUID = 1L;

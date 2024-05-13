@@ -2,6 +2,7 @@ package ERRONKA3.DAO;
 
 import ERRONKA3.DAO.*;
 import ERRONKA3.klaseak.Jokalaria;
+import ERRONKA3.klaseak.MySQL;
 import ERRONKA3.klaseak.Taldea;
 
 import java.sql.Connection;
@@ -15,14 +16,11 @@ import java.util.ArrayList;
 public class JokalariaDAO {
 private Connection konexioa;
 private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
+MySQL mysql = new MySQL();
 	
 	public JokalariaDAO() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
+		konexioa = mysql.sqlConnect();
 	}
 	
 	public ArrayList<Jokalaria> getAllJokalariak(){
@@ -33,9 +31,9 @@ private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
         	while (resultSet.next()) {
         		Jokalaria jokalaria = new Jokalaria();
 				jokalaria.setJokalaria_kod(resultSet.getInt("jokalaria_kod"));
-				jokalaria.setIzena(resultSet.getString("izena"));
+				jokalaria.setIzena(resultSet.getString("izena").toUpperCase());
 				jokalaria.setDorsala(resultSet.getInt("dorsala"));
-				jokalaria.setPosizioa(resultSet.getString("posizioa"));
+				jokalaria.setPosizioa(resultSet.getString("posizioa").toUpperCase());
 				int talde_kod = resultSet.getInt("talde_kod");
 				jokalaria.setTaldea(kodearekinTaldeaLortu(talde_kod));
 	            taldeakList.add(jokalaria);
@@ -116,8 +114,8 @@ private ArrayList<Taldea> taldeaList = new ArrayList<Taldea>();
 	
 	public void deskonektatu(){
         try {
-			if (konexioa != null && !konexioa.isClosed()) {
-			    konexioa.close();
+			if (mysql.sqlConnect() != null && !mysql.sqlConnect().isClosed()) {
+				mysql.sqlConnect().close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -4,10 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-
+/**
+ * Klase hau erabiltzen da serbitzariari fitxategiak igotzeko.
+ */
 public class FTPUploader {
 
-    private String serverAddress = "ftp.rugbyfederazioa.com";
     private int port = 21;
     private String user = "mrweb";
     private String pass = "I_113";
@@ -15,7 +16,8 @@ public class FTPUploader {
     public void uploadFile(String Local, String server) {
         FTPClient ftpClient = new FTPClient();
         try {
-            ftpClient.connect(serverAddress, port);
+        	MySQL mysql = new MySQL();
+            ftpClient.connect(mysql.pingServer(), port);
             ftpClient.login(user, pass);
             ftpClient.enterLocalPassiveMode();
 
@@ -27,9 +29,9 @@ public class FTPUploader {
             try (FileInputStream input = new FileInputStream(firstLocalFile)) {
                 boolean done = ftpClient.storeFile(server, input);
                 if (done) {
-                    System.out.println("El archivo se ha subido exitosamente.");
+                    System.out.println("Fitxategia zerbitzariara igo da.");
                 } else {
-                    System.out.println("Hubo un error al subir el archivo.");
+                    System.out.println("Errorea fitxategia igotzean.");
                 }
             }
         } catch (IOException ex) {

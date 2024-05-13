@@ -3,6 +3,7 @@ package ERRONKA3.DAO;
 import ERRONKA3.DAO.*;
 import ERRONKA3.klaseak.Denboraldia;
 import ERRONKA3.klaseak.Jardunaldia;
+import ERRONKA3.klaseak.MySQL;
 import ERRONKA3.klaseak.Partidua;
 import ERRONKA3.klaseak.Taldea;
 
@@ -15,14 +16,11 @@ import java.util.ArrayList;
 
 public class PartiduaDAO {
 	private Connection konexioa;
+	MySQL mysql = new MySQL();
 	
 	public PartiduaDAO() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
+		konexioa = mysql.sqlConnect();
 	}
 	
 	public void updatePartidua(Partidua partidua) {
@@ -107,8 +105,8 @@ public class PartiduaDAO {
 	}
 	public void deskonektatu(){
         try {
-			if (konexioa != null && !konexioa.isClosed()) {
-			    konexioa.close();
+			if (mysql.sqlConnect() != null && !mysql.sqlConnect().isClosed()) {
+			    mysql.sqlConnect().close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

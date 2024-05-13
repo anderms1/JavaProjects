@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Usuario implements Serializable{
 	
 	/**
-	 * 
+	 * Objetueei orientatutako klase bat da eta bere atributuak izena eta pasahitza da.
 	 */
 	private static final long serialVersionUID = 1534454592410251924L;
 	

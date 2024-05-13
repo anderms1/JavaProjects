@@ -215,12 +215,12 @@ public class WDenboraldiak extends JPanel {
 					
 					xml.denboraldiaXMLGeneratu(denboraldiHistoriala,taldeakList);
 					JOptionPane.showMessageDialog(null, "XML-a ongi sortuta.","Information",JOptionPane.INFORMATION_MESSAGE);
-					/*int confirm = JOptionPane.showConfirmDialog(null,"Nahi duzu igo xml-a?","Konfimazioa",JOptionPane.YES_NO_OPTION);
+					int confirm = JOptionPane.showConfirmDialog(null,"Nahi duzu igo xml-a?","Konfimazioa",JOptionPane.YES_NO_OPTION);
 					if(confirm == JOptionPane.YES_OPTION) {
 						FTPUploader ftpuploader = new FTPUploader();
 
 			            ftpuploader.uploadFile("federazioa.xml", "/var/www/RUGBY3/federazioa.xml");
-					}*/
+					}
 		            
 
 				}catch (Exception ex) {

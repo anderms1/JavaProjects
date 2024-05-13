@@ -1,6 +1,7 @@
 package ERRONKA3.DAO;
 
 import ERRONKA3.DAO.*;
+import ERRONKA3.klaseak.MySQL;
 import ERRONKA3.klaseak.Taldea;
 
 import java.sql.Connection;
@@ -13,14 +14,11 @@ import java.util.ArrayList;
 
 public class TaldeaDAO {
 	private Connection konexioa;
+	MySQL mysql = new MySQL();
 	
 	public TaldeaDAO() {
-		try {
-			konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");
-		}catch(SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		/*konexioa = DriverManager.getConnection("jdbc:mysql://localhost/rugby", "root", "");*/
+		konexioa = mysql.sqlConnect();
 	}
 	
 	public ArrayList<Taldea> getAllTaldeak(){
@@ -31,9 +29,9 @@ public class TaldeaDAO {
         	while (resultSet.next()) {
         		Taldea talde = new Taldea();
 				talde.setTalde_kod(resultSet.getInt("talde_kod"));
-	            talde.setTalde_izena(resultSet.getString("talde_izena"));
-	            talde.setHerria(resultSet.getString("herria"));
-	            talde.setZuzendaria(resultSet.getString("zuzendaria"));
+	            talde.setTalde_izena(resultSet.getString("talde_izena").toUpperCase());
+	            talde.setHerria(resultSet.getString("herria").toUpperCase());
+	            talde.setZuzendaria(resultSet.getString("zuzendaria").toUpperCase());
 	            taldeakList.add(talde);
             }
         } catch (SQLException e) {
@@ -138,8 +136,8 @@ public class TaldeaDAO {
 	
 	public void deskonektatu(){
         try {
-			if (konexioa != null && !konexioa.isClosed()) {
-			    konexioa.close();
+			if (mysql.sqlConnect() != null && !mysql.sqlConnect().isClosed()) {
+				mysql.sqlConnect().close();
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
