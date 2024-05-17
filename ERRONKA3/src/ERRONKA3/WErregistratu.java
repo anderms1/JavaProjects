@@ -15,6 +15,8 @@ import javax.persistence.*;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import ERRONKA3.klaseak.Usuario;
@@ -79,7 +81,10 @@ public class WErregistratu extends JPanel {
 					JOptionPane.showMessageDialog(null,"Pasahitzak ez dira berdinak.","Error",JOptionPane.ERROR_MESSAGE);
 				}else{
 					String erabiltzailea = txtErabiltzailea.getText().toUpperCase();
-					EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/Usuarios.odb");
+					Map<String, String> properties = new HashMap<>();
+					properties.put("javax.persistence.jdbc.user", "admin");
+					properties.put("javax.persistence.jdbc.password", "admin");
+					EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb://www.rugbyfederazioa.com:6136/Usuarios.odb", properties);
 					EntityManager em = emf.createEntityManager();
 					if(!ErabiltzaileaExistitu(em)) {
 						try {

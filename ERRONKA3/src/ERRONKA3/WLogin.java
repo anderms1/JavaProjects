@@ -25,6 +25,8 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -126,7 +128,15 @@ public class WLogin extends JFrame {
 				if(txtErabiltzailea.getText().isEmpty() || pasahitza.length == 0) {
 					JOptionPane.showMessageDialog(null,"Datu guztiak sartu behar duzu.","Error",JOptionPane.ERROR_MESSAGE);
 				}else {
-					EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/Usuarios.odb");
+					//Komentatu 4 beheko lerroa localHost erabili nahi baduzu
+					Map<String, String> properties = new HashMap<>();
+					properties.put("javax.persistence.jdbc.user", "admin");
+					properties.put("javax.persistence.jdbc.password", "admin");
+					EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb://www.rugbyfederazioa.com:6136/Usuarios.odb", properties);
+					/*
+					 * Ezabatu komentarioa hau eta ipini beheko komandoa ObjectDB localHost erabiltzeko
+					 * EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/Usuarios.odb");
+					 */
 					EntityManager em = emf.createEntityManager();
 					if(!ErabiltzaileaExistitu(em)) {
 						JOptionPane.showMessageDialog(null, "Erabiltzailea hau ez da existitzen.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -16,6 +16,7 @@ import ERRONKA3.klaseak.Jardunaldia;
 import ERRONKA3.klaseak.Jokalaria;
 import ERRONKA3.klaseak.Partidua;
 import ERRONKA3.klaseak.Taldea;
+import utils.Konstanteak;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -227,8 +228,8 @@ public class WDenboraldiak extends JPanel {
 					int confirm = JOptionPane.showConfirmDialog(null,"Nahi duzu igo xml-a?","Konfimazioa",JOptionPane.YES_NO_OPTION);
 					if(confirm == JOptionPane.YES_OPTION) {
 						FTPUploader ftpuploader = new FTPUploader();
-
-			            ftpuploader.uploadFile("federazioa.xml", "/var/www/RUGBY3/federazioa.xml");
+						//TODO hemen aldatu xml fitxategiaren kokapena
+			            ftpuploader.uploadFile("federazioa.xml", Konstanteak.XML_SERVER_PATH + "federazioa.xml");
 					}
 		            
 
