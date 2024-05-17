@@ -80,11 +80,16 @@ public class WErregistratu extends JPanel {
 				}else if(!Arrays.equals(pasahitza, pasahitza2)){
 					JOptionPane.showMessageDialog(null,"Pasahitzak ez dira berdinak.","Error",JOptionPane.ERROR_MESSAGE);
 				}else{
+					//Komentatu 4 beheko lerroa localHost erabili nahi baduzu
 					String erabiltzailea = txtErabiltzailea.getText().toUpperCase();
 					Map<String, String> properties = new HashMap<>();
 					properties.put("javax.persistence.jdbc.user", "admin");
 					properties.put("javax.persistence.jdbc.password", "admin");
 					EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb://www.rugbyfederazioa.com:6136/Usuarios.odb", properties);
+					/*
+					 * Ezabatu komentarioa hau eta ipini beheko komandoa ObjectDB localHost erabiltzeko
+					 * EntityManagerFactory emf = Persistence.createEntityManagerFactory("$objectdb/db/Usuarios.odb");
+					 */
 					EntityManager em = emf.createEntityManager();
 					if(!ErabiltzaileaExistitu(em)) {
 						try {
